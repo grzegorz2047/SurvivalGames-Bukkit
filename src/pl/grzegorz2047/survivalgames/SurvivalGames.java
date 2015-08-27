@@ -12,6 +12,7 @@ public class SurvivalGames extends JavaPlugin {
     SurvivalGames sg = this;
 
     public SurvivalGames() {
+
     }
 
     public void onDisable() {
