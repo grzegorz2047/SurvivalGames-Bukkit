@@ -1,0 +1,6 @@
+name: SurvivalGames
+version: 0.1
+main: pl.grzegorz2047.survivalgames.SurvivalGames
+commands:
+    sg:
+        description: Glowna komenda pluginu
