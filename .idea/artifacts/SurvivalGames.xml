@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="SurvivalGames">
+    <output-path>$USER_HOME$/Desktop/Serwer/plugins</output-path>
+    <root id="archive" name="SurvivalGames.jar">
+      <element id="module-output" name="SurvivalGames" />
+      <element id="file-copy" path="$PROJECT_DIR$/plugin.yml" />
+    </root>
+  </artifact>
+</component>

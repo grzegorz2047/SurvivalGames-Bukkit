@@ -1,8 +1,10 @@
 package pl.grzegorz2047.survivalgames.runnable;
 
+import org.bukkit.Bukkit;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 import pl.grzegorz2047.survivalgames.SurvivalGames;
+import pl.grzegorz2047.survivalgames.events.CounterEndEvent;
 
 /**
  * Created by Grzegorz2047. 27.08.2015.
@@ -13,7 +15,6 @@ public class Counter extends BukkitRunnable {
     private int time;
     private int taskId;
     private boolean running = false;
-
 
     BukkitTask task;
 
@@ -56,8 +57,13 @@ public class Counter extends BukkitRunnable {
     @Override
     public void run() {
         if (running) {
-            if (time >= 0) {
+            Bukkit.broadcastMessage("Arena wystartuje za "+this.time);
+            this.time--;
+            if (time <= 0) {
+                CounterEndEvent event = new CounterEndEvent();
+                Bukkit.getPluginManager().callEvent(event);
                 this.stop();
+
             }
         }
 
