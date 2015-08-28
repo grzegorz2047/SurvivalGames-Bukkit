@@ -18,7 +18,7 @@ public class PlayerMoveListener implements Listener {
 
     @EventHandler
     void onPlayerMove(PlayerMoveEvent e) {
-        if (!sg.getGame().isInGame()){
+        if (!sg.getGame().isInGame() && !sg.isDebugMode()){
             e.setTo(e.getFrom());
         }
     }

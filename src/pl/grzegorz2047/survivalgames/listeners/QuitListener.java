@@ -18,6 +18,8 @@ public class QuitListener implements Listener {
     @EventHandler
     void onQuit(PlayerQuitEvent e) {
         Player p = e.getPlayer();
+
+        sg.getGame().removePlayer(p);
         Bukkit.broadcastMessage(p.getDisplayName() + " opuscil serwer!");
     }
 }

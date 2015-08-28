@@ -16,6 +16,9 @@ public class StartArg extends Arg {
 
     @Override
     protected void execute(CommandSender sender) {
-        sg.getGame().start();
+        if(!sg.getGame().isInGame()){
+            sg.getGame().start();
+        }
+
     }
 }

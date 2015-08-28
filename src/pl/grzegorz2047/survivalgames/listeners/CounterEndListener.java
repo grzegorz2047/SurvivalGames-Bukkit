@@ -22,6 +22,7 @@ public class CounterEndListener implements Listener {
     @EventHandler
     void onCounterEnd(CounterEndEvent e) {
         g = sg.getGame();
-        Bukkit.broadcastMessage("Timer zostal zakonczony przy  stanie "+ g.getGameState());
+        Bukkit.broadcastMessage("Timer zostal zakonczony podczas "+ g.getGameState());
+        g.setGameState(Game.GameState.INGAME);
     }
 }

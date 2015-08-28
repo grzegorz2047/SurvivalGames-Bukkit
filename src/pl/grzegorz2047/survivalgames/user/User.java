@@ -1,5 +1,8 @@
 package pl.grzegorz2047.survivalgames.user;
 
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
+
 /**
  * Created by Grzegorz2047. 28.08.2015.
  */
@@ -13,4 +16,11 @@ public class User {
         this.playing = playing;
     }
 
+    public String getUsername() {
+        return username;
+    }
+
+    public Player getPlayer() {
+        return Bukkit.getPlayer(username);
+    }
 }

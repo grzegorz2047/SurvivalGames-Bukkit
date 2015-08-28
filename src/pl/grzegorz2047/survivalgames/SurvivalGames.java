@@ -14,8 +14,22 @@ public class SurvivalGames extends JavaPlugin {
     SurvivalGames sg = this;
     Game game;
 
+    /*                                                      */
+    private static boolean debugMode = true;
+    /*                                                      */
+
+    public static void debug(String Msg){
+        if(debugMode){
+            Bukkit.broadcastMessage(Msg);
+        }
+    }
+
     public SurvivalGames() {
 
+    }
+
+    public boolean isDebugMode() {
+        return debugMode;
     }
 
     public void onDisable() {

@@ -17,6 +17,7 @@ public class SGCommand implements CommandExecutor {
         this.sg = sg;
         this.commands.put("start", new StartArg(sg));
         this.commands.put("stop", new StopArg(sg));
+        this.commands.put("setspawnpoint", new SetSpawnPointArg(sg));
     }
 
     private final Map<String, Arg> commands = new HashMap<String, Arg>();

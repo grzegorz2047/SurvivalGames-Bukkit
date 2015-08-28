@@ -57,11 +57,18 @@ public class Counter extends BukkitRunnable {
     @Override
     public void run() {
         if (running) {
-            Bukkit.broadcastMessage("Arena wystartuje za "+this.time);
+            Bukkit.broadcastMessage("Arena wystartuje za " + this.time);
             this.time--;
             if (time <= 0) {
-                CounterEndEvent event = new CounterEndEvent();
-                Bukkit.getPluginManager().callEvent(event);
+
+                Bukkit.getScheduler().runTask(sg, new Runnable() {
+                    @Override
+                    public void run() {
+                        CounterEndEvent event = new CounterEndEvent();
+                        Bukkit.getPluginManager().callEvent(event);//Fires an event and triggers CounterEndListener
+                    }
+                });
+
                 this.stop();
 
             }
