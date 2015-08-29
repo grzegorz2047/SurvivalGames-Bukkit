@@ -5,18 +5,21 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import pl.grzegorz2047.survivalgames.commands.SGCommand;
+import pl.grzegorz2047.survivalgames.files.YmlFileHandler;
 import pl.grzegorz2047.survivalgames.listeners.CounterEndListener;
 import pl.grzegorz2047.survivalgames.listeners.JoinListener;
 import pl.grzegorz2047.survivalgames.listeners.PlayerMoveListener;
 import pl.grzegorz2047.survivalgames.listeners.QuitListener;
 
 public class SurvivalGames extends JavaPlugin {
-    SurvivalGames sg = this;
+    SurvivalGames sg;
     Game game;
-
+    YmlFileHandler mapfileHandler;
     /*                                                      */
     private static boolean debugMode = true;
     /*                                                      */
+
+    private String prefix = "&7&cSG&7]";
 
     public static void debug(String Msg){
         if(debugMode){
@@ -38,6 +41,11 @@ public class SurvivalGames extends JavaPlugin {
     }
 
     public void onEnable() {
+        sg = this;
+        Bukkit.getWorlds().get(0).setAutoSave(false);
+        mapfileHandler = new YmlFileHandler(sg, this.getDataFolder().getAbsolutePath(),"TestMap");
+        mapfileHandler.load();
+
         this.initManagers();
         this.registerListeners();
         this.getCommands();
@@ -54,6 +62,7 @@ public class SurvivalGames extends JavaPlugin {
         pl.registerEvents(new QuitListener(sg), this);
         pl.registerEvents(new CounterEndListener(sg), this);
         pl.registerEvents(new PlayerMoveListener(sg), this);
+        pl
     }
 
     public void initManagers() {

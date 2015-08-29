@@ -34,7 +34,7 @@ public class Game {
 
     public enum GameState {WAITING, STARTING, INGAME, RESTARTING}
 
-    ;
+
 
     private GameState state = GameState.WAITING;
 
@@ -64,6 +64,10 @@ public class Game {
         this.players.put(p.getName(), user);
         this.getSpawn().placePlayer(user);
         return user;
+    }
+
+    public void setSpectator() {
+
     }
 
     public void removePlayer(Player p) {

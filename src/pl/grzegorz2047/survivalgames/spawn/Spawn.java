@@ -38,7 +38,9 @@ public class Spawn {
 
     private SpawnPoint getPlayerSpawnPoint(String username) {
         for (SpawnPoint sp : this.spawnPoints) {
-            if (sp.getOccupiedBy().equals(username)) {
+            if (sp.
+                    getOccupiedBy().
+                    equals(username)) {
                 return sp;
             }
         }
@@ -53,7 +55,7 @@ public class Spawn {
         }
     }
 
-    public void displacePlayer(User user) {//Free spawnpoint
+    public void displacePlayer(User user) {//set Free spawnpoint
         SpawnPoint sp = this.getPlayerSpawnPoint(user.getUsername());
         if (sp != null) {
             user.getPlayer().teleport(sp.getLocation());

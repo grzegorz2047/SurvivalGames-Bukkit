@@ -27,6 +27,7 @@ public class JoinListener implements Listener {
         if(p == null){
             return;
         }
+
         Bukkit.broadcastMessage(p.getDisplayName() + " dolaczyl do areny!");
         sg.getGame().addPlayer(p);
 
