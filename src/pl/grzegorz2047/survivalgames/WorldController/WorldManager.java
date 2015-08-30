@@ -5,6 +5,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.WorldCreator;
 import org.bukkit.WorldType;
+import org.bukkit.entity.Player;
+import pl.grzegorz2047.survivalgames.MsgManager;
 
 import java.io.File;
 import java.io.IOException;
@@ -14,10 +16,11 @@ import java.io.IOException;
  */
 public class WorldManager {
 
-    public void load(String worldname) throws IOException {
+    public void load(String worldName) throws IOException {
+        File from = new File("Mapy"+File.separator+worldName);
+        MsgManager.debug("From " + from.getAbsolutePath());
 
-        File from = new File(Bukkit.getWorldContainer(), worldname);
-        File to = new File(worldname);
+        File to = new File(worldName);
 
         if (to.exists()) {
             to.delete();
@@ -27,7 +30,7 @@ public class WorldManager {
         new File(to, "uid.dat").delete();
         new File(to, "session.lock").delete();
 
-        WorldCreator creator = new WorldCreator(worldname);
+        WorldCreator creator = new WorldCreator(worldName);
         creator.environment(World.Environment.NORMAL);
         creator.generateStructures(false);
         creator.generator(new AirGenerator());
@@ -39,5 +42,14 @@ public class WorldManager {
         world.setPVP(true);
     }
 
+    public void unloadWorld(String worldName) {
+        if (Bukkit.getOnlinePlayers().length > 0) {
+            for (Player p : Bukkit.getOnlinePlayers()) {
+                p.kickPlayer(MsgManager.msg("Serwer restartuje sie!"));
+            }
+        }
+        Bukkit.unloadWorld(Bukkit.getWorld(worldName), false);
+
+    }
 
 }

@@ -8,6 +8,6 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="bukkit-1.7.2-R0.1-20131211.094436-7" level="project" />
-    <orderEntry type="library" name="commons-io-2.4-javadoc" level="project" />
+    <orderEntry type="library" name="commons-io-2.4" level="project" />
   </component>
 </module>

@@ -3,6 +3,7 @@ package pl.grzegorz2047.survivalgames.runnable;
 import org.bukkit.Bukkit;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
+import pl.grzegorz2047.survivalgames.MsgManager;
 import pl.grzegorz2047.survivalgames.SurvivalGames;
 import pl.grzegorz2047.survivalgames.events.CounterEndEvent;
 
@@ -21,21 +22,22 @@ public class Counter extends BukkitRunnable {
     public Counter(SurvivalGames sg, int time) {
         this.time = time;
         this.sg = sg;
-        task = this.runTaskTimerAsynchronously(sg, 0, 20l);
-        this.taskId = task.getTaskId();
     }
 
 
     public void start() {
-        if (!running) {
-            running = true;
+        if (running) {
+            MsgManager.debug("Nie mozesz uruchomic countera po raz drugi");
+            return;
         }
+        this.createTask();
+        running = true;
+
     }
 
     public void stop() {
         this.cancel();
         this.running = false;
-
     }
 
     public void pause() {
@@ -43,12 +45,11 @@ public class Counter extends BukkitRunnable {
     }
 
 
-    public void reset() {
-        stop();
-        this.time = 0;
+    private void createTask() {
         task = this.runTaskTimerAsynchronously(sg, 0, 20l);
-
+        this.taskId = task.getTaskId();
     }
+
 
     public void setTime(int time) {
         this.time = time;

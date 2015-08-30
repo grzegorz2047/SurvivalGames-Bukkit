@@ -8,6 +8,8 @@ import org.bukkit.Location;
  */
 public class SpawnPoint {
 
+    private double pitch;
+    private double yaw;
     private double x, y, z;
     private String worldName;
     private boolean free = true;
@@ -26,10 +28,12 @@ public class SpawnPoint {
     public void setFree(boolean free) {
         this.free = free;
     }
-    public SpawnPoint(double x, double y, double z, String worldName) {
+    public SpawnPoint(double x, double y, double z, double pitch, double yaw, String worldName) {
         this.x = x;
         this.y = y;
         this.z = z;
+        this.pitch = pitch;
+        this.yaw = yaw;
         this.worldName = worldName;
     }
 
@@ -77,5 +81,13 @@ public class SpawnPoint {
 
     public Location getLocation() {
         return new Location(Bukkit.getWorld(this.worldName),x,y,z);
+    }
+
+    public double getPitch() {
+        return pitch;
+    }
+
+    public double getYaw() {
+        return yaw;
     }
 }

@@ -4,6 +4,7 @@
     <root id="archive" name="SurvivalGames.jar">
       <element id="module-output" name="SurvivalGames" />
       <element id="file-copy" path="$PROJECT_DIR$/plugin.yml" />
+      <element id="extracted-dir" path="$USER_HOME$/Documents/Biblioteka/commons-io-2.4.jar" path-in-jar="/" />
     </root>
   </artifact>
 </component>

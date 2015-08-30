@@ -28,6 +28,7 @@ public class JoinListener implements Listener {
             return;
         }
 
+        e.setJoinMessage(null);
         Bukkit.broadcastMessage(p.getDisplayName() + " dolaczyl do areny!");
         sg.getGame().addPlayer(p);
 

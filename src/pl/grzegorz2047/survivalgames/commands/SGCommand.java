@@ -17,7 +17,10 @@ public class SGCommand implements CommandExecutor {
         this.sg = sg;
         this.commands.put("start", new StartArg(sg));
         this.commands.put("stop", new StopArg(sg));
+        this.commands.put("vote", new VoteArg(sg));
         this.commands.put("setspawnpoint", new SetSpawnPointArg(sg));
+        this.commands.put("savespawnpoints", new SaveSpawnPointsArg(sg));
+        this.commands.put("clearSpawnPoints", new ClearSpawnPointsArg(sg));
     }
 
     private final Map<String, Arg> commands = new HashMap<String, Arg>();

@@ -41,7 +41,7 @@ public class YmlFileHandler {
 
         this.filename=name;
         this.file = new File(path, this.filename+".yml");
-        System.out.println(path+" sciezka");
+        System.out.println(path+" sciezka dla "+name);
         this.config = new YamlConfiguration();
         if(!file.exists()){
             System.out.println("Plik "+this.filename+" nie istnieje!");
