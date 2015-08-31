@@ -3,9 +3,6 @@ package pl.grzegorz2047.survivalgames.utils;
 /**
  * Created by Grzegorz2047. 31.08.2015.
  */
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
 
 import org.bukkit.*;
 import org.bukkit.entity.Player;
@@ -16,6 +13,12 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
+import pl.grzegorz2047.survivalgames.SurvivalGames;
+
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
+
 public class GhostUtil {
     /**
      * Team of ghosts and people who can see ghosts.
@@ -95,6 +98,7 @@ public class GhostUtil {
 
             player.setAllowFlight(true);
             player.setFlying(true);
+            player.setGameMode(GameMode.CREATIVE);
 
             if(!player.getInventory().contains(spectatorCompass)){
                 player.getInventory().addItem(spectatorCompass);
@@ -116,7 +120,12 @@ public class GhostUtil {
      * @param player - the player to teleport
      */
     public void teleportPlayer(Player player){
-        Player closestPlayer = getClosestPlayer(player);
+        player.teleport(((SurvivalGames)
+                Bukkit.getPluginManager().getPlugin("SurvivalGames"))
+                .getGame().
+                        getSpawn().
+                        getSpectatorLoc());
+        /*Player closestPlayer = getClosestPlayer(player);
         int y = player.getWorld().getHighestBlockYAt(player.getLocation());
         if (player.getLocation().getY() < 0) {
             Player killer = player.getKiller();
@@ -131,7 +140,7 @@ public class GhostUtil {
                     player.teleport(loc);
                 }
             }
-        }
+        }*/
     }
 
     public Player getClosestPlayer(Player player) {

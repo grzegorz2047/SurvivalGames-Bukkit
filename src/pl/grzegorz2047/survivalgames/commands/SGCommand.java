@@ -1,7 +1,6 @@
 
 package pl.grzegorz2047.survivalgames.commands;
 
-import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -21,6 +20,7 @@ public class SGCommand implements CommandExecutor {
         this.commands.put("setspawnpoint", new SetSpawnPointArg(sg));
         this.commands.put("savespawnpoints", new SaveSpawnPointsArg(sg));
         this.commands.put("clearSpawnPoints", new ClearSpawnPointsArg(sg));
+        this.commands.put("setspecspawn", new SetSpecSpawnArg(sg));
     }
 
     private final Map<String, Arg> commands = new HashMap<String, Arg>();

@@ -14,7 +14,6 @@ public class SurvivalGames extends JavaPlugin {
     Game game;
     YmlFileHandler mapfileHandler;
     GhostUtil ghostUtil;
-    private AntiBlockListener antyBlocker;
 
 
     /*                                                      */
@@ -39,6 +38,8 @@ public class SurvivalGames extends JavaPlugin {
 
     public void onEnable() {
         this.sg = this;
+        this.getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
+
         this.ghostUtil = new GhostUtil(this);
         Bukkit.getWorlds().get(0).setAutoSave(false);
         mapfileHandler = new YmlFileHandler(sg, this.getDataFolder().getAbsolutePath(),"TestMap");
@@ -61,12 +62,13 @@ public class SurvivalGames extends JavaPlugin {
         pl.registerEvents(new CounterEndListener(sg), this);
         pl.registerEvents(new PlayerMoveListener(sg), this);
         pl.registerEvents(new PlayerDamageListener(sg), this);
+        pl.registerEvents(new PlayerDeathListener(sg), this);
         pl.registerEvents(new BlockBreakListener(sg), this);
         pl.registerEvents(new BlockPlaceListener(sg),this);
         pl.registerEvents(new EntityExplodeListener(sg), this);
         pl.registerEvents(new CountdownSecondListener(sg),this);
         pl.registerEvents(new ForCompassListeners(sg),this);
-        pl.registerEvents(new AntiBlockListener(sg), this);
+        pl.registerEvents(new PlayerMoveListener(sg), this);
     }
 
     public void initManagers() {

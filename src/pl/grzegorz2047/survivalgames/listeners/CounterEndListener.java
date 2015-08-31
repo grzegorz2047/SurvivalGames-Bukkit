@@ -32,7 +32,10 @@ public class CounterEndListener implements Listener {
             Bukkit.broadcastMessage(MsgManager.msg("Zostala wlaczona ochrona przed graczami na 30 sekund!"));
         }
         else if(g.isInGame()){
-            if(!g.isDeathMatch()){
+            if(g.isDeathMatch()){
+                g.end();
+            }
+            else if(!g.isDeathMatch()){
                 Counter counter = new Counter(sg,g.getDmTime());
                 counter.start();
                 g.setDeathMatch(true);

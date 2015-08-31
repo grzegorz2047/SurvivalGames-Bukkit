@@ -12,16 +12,20 @@ import java.io.DataOutputStream;
 
 public class BungeeUtil {
 
+    public static String lobbyServer = "Lobby_survivalGames";
+
     public static void changeServer(SurvivalGames sg, Player player, String server) {
         try {
+            if(sg.isDebugMode()){
+                player.kickPlayer(MsgManager.msg("Umarles badz rozrywka zakonczyla sie dla ciebie!"));
+                return;
+            }
             ByteArrayOutputStream b = new ByteArrayOutputStream();
             DataOutputStream out = new DataOutputStream(b);
             out.writeUTF("Connect");
             out.writeUTF(server);
             player.sendPluginMessage(sg, "BungeeCord", b.toByteArray());
-            if(sg.isDebugMode()){
-                player.kickPlayer(player.getName());
-            }
+
         } catch (Exception e) {
             MsgManager.debug(e.getMessage());
         }

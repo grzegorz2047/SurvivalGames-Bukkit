@@ -1,6 +1,7 @@
 package pl.grzegorz2047.survivalgames.spawn;
 
-import org.bukkit.ChatColor;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import pl.grzegorz2047.survivalgames.MsgManager;
 import pl.grzegorz2047.survivalgames.SurvivalGames;
 import pl.grzegorz2047.survivalgames.files.YmlFileHandler;
@@ -14,6 +15,8 @@ import java.util.List;
  */
 public class Spawn {
 
+
+    private Location spectatorLoc;
     private List<SpawnPoint> spawnPoints = new ArrayList<SpawnPoint>();
 
     private SurvivalGames sg;
@@ -21,6 +24,15 @@ public class Spawn {
     public Spawn(SurvivalGames sg) {
         this.sg = sg;
         this.loadSpawnFromFile(sg.getMapfileHandler());
+        this.loadSpecLocFromFile(sg.getMapfileHandler());
+    }
+
+    public Location getSpectatorLoc() {
+        return spectatorLoc;
+    }
+
+    public void setSpectatorLoc(Location spectatorLoc) {
+        this.spectatorLoc = spectatorLoc;
     }
 
     public void addSpawnPoint(SpawnPoint spawnPoint) {
@@ -85,7 +97,7 @@ public class Spawn {
 
     public void loadSpawnFromFile(YmlFileHandler file) {
         int numOfSpawns = file.getConfig().getInt("numOfSpawns");
-        MsgManager.debug("Liczba SpawnPointow "+numOfSpawns+" do wczytania");
+        MsgManager.debug("Liczba SpawnPointow " + numOfSpawns + " do wczytania");
         if (numOfSpawns != 0) {
             for (int i = 0; i < numOfSpawns; i++) {
                 String spawnPointString = file.getConfig().getString("spawns."+i);
@@ -101,6 +113,23 @@ public class Spawn {
                 this.addSpawnPoint(sp);
 
             }
+        }
+    }
+    public void loadSpecLocFromFile(YmlFileHandler file) {
+        String spawnPointString = file.getConfig().getString("spawns.spectator");
+        if (spawnPointString != null) {
+            String[] spArray = spawnPointString.split(":");
+            double x = Double.parseDouble(spArray[0]);
+            double y = Double.parseDouble(spArray[1]);
+            double z = Double.parseDouble(spArray[2]);
+            double pitch = Double.parseDouble(spArray[3]);
+            double yaw = Double.parseDouble(spArray[4]);
+            String worldName = spArray[5];
+
+            this.spectatorLoc = new Location(Bukkit.getWorld(worldName),x,y,z);
+            MsgManager.debug("Spawn spectatora wczytany!");
+        }else{
+            MsgManager.debug("Spawn spectatora nie istnieje!");
         }
     }
 

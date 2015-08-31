@@ -29,6 +29,10 @@ public class WorldManager {
         FileUtils.copyDirectory(from, to);
         new File(to, "uid.dat").delete();
         new File(to, "session.lock").delete();
+        File defaultWorldFile = new File(Bukkit.getWorlds().get(0).getName()+File.separator+"playerdata"+File.separator);
+        MsgManager.debug("From " + defaultWorldFile.getAbsolutePath());
+        FileUtils.deleteDirectory(defaultWorldFile);
+        defaultWorldFile.mkdir();
 
         WorldCreator creator = new WorldCreator(worldName);
         creator.environment(World.Environment.NORMAL);

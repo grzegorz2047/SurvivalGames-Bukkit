@@ -9,13 +9,13 @@ import org.bukkit.entity.Player;
 public class User {
 
     private String username;
-    private boolean playing;
+    private boolean spectator;
 
     private int money, kills, deaths, wins = 0;//?
 
-    public User(String username, boolean playing) {
+    public User(String username, boolean spectator) {
         this.username = username;
-        this.playing = playing;
+        this.spectator = spectator;
     }
 
     public String getUsername() {
@@ -28,7 +28,7 @@ public class User {
 
 
     public boolean isSpectator() {
-        return !playing;
+        return spectator;
     }
 
     public int getMoney() {
@@ -37,5 +37,9 @@ public class User {
 
     public int getKills() {
         return kills;
+    }
+
+    public void setSpectator(boolean spectator) {
+        this.spectator = spectator;
     }
 }

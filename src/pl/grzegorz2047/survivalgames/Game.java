@@ -1,17 +1,19 @@
 package pl.grzegorz2047.survivalgames;
 
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import pl.grzegorz2047.survivalgames.WorldController.WorldManager;
 import pl.grzegorz2047.survivalgames.runnable.Counter;
 import pl.grzegorz2047.survivalgames.spawn.Spawn;
 import pl.grzegorz2047.survivalgames.stats.ServerStats;
 import pl.grzegorz2047.survivalgames.user.User;
+import pl.grzegorz2047.survivalgames.utils.BungeeUtil;
+import pl.grzegorz2047.survivalgames.utils.GhostUtil;
 import pl.grzegorz2047.survivalgames.votesystem.Vote;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -25,13 +27,12 @@ public class Game {
     private WorldManager wm;
     ServerStats stats;
 
-    private String lobbyServer = "Lobby_survivalGames";
 
     private int mainTime = 1 * 60;//in seconds
     private int dmTime = 3 * 60;
     private boolean protection = true;
     private int protectionTime = 30;//in seconds
-    private Game ghostUtil;
+    private GhostUtil ghostUtil;
 
     public boolean isProtection() {
         return protection;
@@ -54,6 +55,7 @@ public class Game {
         this.stats = new ServerStats(sg);
         this.wm = new WorldManager();
         this.wm.unloadWorld(worldName);
+        this.ghostUtil = new GhostUtil(sg);
         try {
             this.wm.load(worldName);
         } catch (IOException e) {
@@ -90,11 +92,8 @@ public class Game {
         return stats;
     }
 
-    public String getLobbyServer() {
-        return lobbyServer;
-    }
 
-    public Game getGhostUtil() {
+    public GhostUtil getGhostUtil() {
         return ghostUtil;
     }
 
@@ -127,13 +126,13 @@ public class Game {
 
     private boolean deathMatch = false;
 
-    public boolean isDeathMatch(){
+    public boolean isDeathMatch() {
         return this.deathMatch;
     }
 
-    public boolean startDeatchMatch(){
-        if(isDeathMatch()){
-           return false;
+    public boolean startDeatchMatch() {
+        if (isDeathMatch()) {
+            return false;
         }
         this.deathMatch = true;
         return true;
@@ -144,10 +143,14 @@ public class Game {
     }
 
 
-    public User addPlayer(Player p) {
-        User user = new User(p.getName(), true);
+    public User addPlayer(Player p, boolean spectator) {
+        User user = new User(p.getName(), spectator);
         this.players.put(p.getName(), user);
-        this.getSpawn().placePlayer(user);
+        if (!spectator) {
+            this.getSpawn().placePlayer(user);
+        } else {
+            p.teleport(this.getSpawn().getSpectatorLoc());
+        }
         return user;
     }
 
@@ -161,14 +164,26 @@ public class Game {
         this.players.remove(p.getName());
     }
 
-    public void end(){
-
+    public void end() {
+        if (stats.getActivePlayers() > 1) {
+            Bukkit.broadcastMessage(
+                    MsgManager.msg(
+                            ChatColor.RED +
+                                    "Gra nie zostala zakonczona! Gracze zostaja ukarani ujemnymi punktami expa za przedluzanie rozgrywki!"));
+        } else {
+            Bukkit.broadcastMessage(
+                    MsgManager.msg(
+                            ChatColor.RED +
+                                    "Cos poszlo nie tak. Zglos sie do moderatora."));
+        }
+        for (Player p : Bukkit.getOnlinePlayers()) {
+            BungeeUtil.changeServer(sg, p, BungeeUtil.lobbyServer);
+        }
     }
 
-    public void reset(){
-
+    public void reset() {
+        sg.getGame().setGameState(GameState.RESTARTING);
     }
-
 
 
 }
