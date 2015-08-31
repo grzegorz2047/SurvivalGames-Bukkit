@@ -10,7 +10,23 @@ Extensive testing
 Make player classes?
 Resetting map
 connect with db and?
+
 scoreboard data
+alive
+dead
+spectators
+(from neksi)
 
 Random items in db
 nazwa:data:ilosc: + enchants ? + option to disable
+
+make dm where you have cuboid and stars effects at the egdes
+
+pushing spect away from players alive (neksi code)
+
+use ServerStats to follow kills, spectators, active players
+
+exptionals when liany, trawa itd.
+
+do it
+

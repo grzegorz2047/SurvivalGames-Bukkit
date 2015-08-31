@@ -4,7 +4,7 @@
     <file url="file://$PROJECT_DIR$/src/pl/grzegorz2047/survivalgames/SurvivalGames.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/pl/grzegorz2047/survivalgames/commands/SGCommand.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/pl/grzegorz2047/survivalgames/listeners/JoinListener.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/src/pl/grzegorz2047/survivalgames/listeners/QuitListener.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/pl/grzegorz2047/survivalgames/listeners/PlayerQuitListener.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/pl/grzegorz2047/survivalgames/runnable/Counter.java" charset="UTF-8" />
     <file url="PROJECT" charset="UTF-8" />
   </component>

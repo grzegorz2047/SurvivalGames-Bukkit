@@ -2,17 +2,20 @@
 package pl.grzegorz2047.survivalgames;
 
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import pl.grzegorz2047.survivalgames.commands.SGCommand;
 import pl.grzegorz2047.survivalgames.files.YmlFileHandler;
 import pl.grzegorz2047.survivalgames.listeners.*;
+import pl.grzegorz2047.survivalgames.utils.GhostUtil;
 
 public class SurvivalGames extends JavaPlugin {
     SurvivalGames sg;
     Game game;
     YmlFileHandler mapfileHandler;
+    GhostUtil ghostUtil;
+    private AntiBlockListener antyBlocker;
+
 
     /*                                                      */
     public static boolean debugMode = true;
@@ -35,7 +38,8 @@ public class SurvivalGames extends JavaPlugin {
     }
 
     public void onEnable() {
-        sg = this;
+        this.sg = this;
+        this.ghostUtil = new GhostUtil(this);
         Bukkit.getWorlds().get(0).setAutoSave(false);
         mapfileHandler = new YmlFileHandler(sg, this.getDataFolder().getAbsolutePath(),"TestMap");
         mapfileHandler.load();
@@ -53,10 +57,16 @@ public class SurvivalGames extends JavaPlugin {
     public void registerListeners() {
         PluginManager pl = Bukkit.getPluginManager();
         pl.registerEvents(new JoinListener(sg), this);
-        pl.registerEvents(new QuitListener(sg), this);
+        pl.registerEvents(new PlayerQuitListener(sg), this);
         pl.registerEvents(new CounterEndListener(sg), this);
         pl.registerEvents(new PlayerMoveListener(sg), this);
         pl.registerEvents(new PlayerDamageListener(sg), this);
+        pl.registerEvents(new BlockBreakListener(sg), this);
+        pl.registerEvents(new BlockPlaceListener(sg),this);
+        pl.registerEvents(new EntityExplodeListener(sg), this);
+        pl.registerEvents(new CountdownSecondListener(sg),this);
+        pl.registerEvents(new ForCompassListeners(sg),this);
+        pl.registerEvents(new AntiBlockListener(sg), this);
     }
 
     public void initManagers() {

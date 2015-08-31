@@ -21,7 +21,7 @@ public class StartArg extends Arg {
     @Override
     protected void execute(CommandSender sender) {
         if (!sg.getGame().isInGame()) {
-            sg.getGame().start();
+            sg.getGame().startGame();
         } else {
             String answer = "Arena juz odlicza czas badz jest podczas gry!";
             if (sender instanceof Player) {

@@ -10,7 +10,7 @@ import java.util.logging.Level;
  */
 public class MsgManager {
 
-    private static String prefix = ChatColor.translateAlternateColorCodes('&', "[&7&cSG&7]");
+    private static String prefix = ChatColor.translateAlternateColorCodes('&', "[&7&cSG&7] ");
 
     public static String msg(String msg) {
         String message = prefix + msg;

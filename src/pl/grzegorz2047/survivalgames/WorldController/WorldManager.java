@@ -36,14 +36,21 @@ public class WorldManager {
         creator.generator(new AirGenerator());
         creator.type(WorldType.FLAT);
 
+        Bukkit.getWorlds().get(0).setAutoSave(false);
         World world = Bukkit.getServer().createWorld(creator);
         world.setAutoSave(false);
         world.setDifficulty(Bukkit.getWorlds().get(0).getDifficulty());
         world.setPVP(true);
+        world.setMonsterSpawnLimit(0);//Wylacza potwory?
+        world.setStorm(false);
+        world.setTime(0);
+        world.setWeatherDuration(20 * 60 * 20);
+        world.setGameRuleValue("doDaylightCycle","false");
     }
 
     public void unloadWorld(String worldName) {
-        if (Bukkit.getOnlinePlayers().length > 0) {
+
+        if (Bukkit.getOnlinePlayers().size() > 0) {
             for (Player p : Bukkit.getOnlinePlayers()) {
                 p.kickPlayer(MsgManager.msg("Serwer restartuje sie!"));
             }

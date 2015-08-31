@@ -5,6 +5,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 import pl.grzegorz2047.survivalgames.MsgManager;
 import pl.grzegorz2047.survivalgames.SurvivalGames;
+import pl.grzegorz2047.survivalgames.events.CountdownSecondEvent;
 import pl.grzegorz2047.survivalgames.events.CounterEndEvent;
 
 /**
@@ -46,7 +47,7 @@ public class Counter extends BukkitRunnable {
 
 
     private void createTask() {
-        task = this.runTaskTimerAsynchronously(sg, 0, 20l);
+        task = this.runTaskTimer(sg, 0, 20l);// async or a sync
         this.taskId = task.getTaskId();
     }
 
@@ -58,17 +59,12 @@ public class Counter extends BukkitRunnable {
     @Override
     public void run() {
         if (running) {
-            Bukkit.broadcastMessage("Arena wystartuje za " + this.time);
             this.time--;
+            CountdownSecondEvent secondCountEvent = new CountdownSecondEvent(time);
+            Bukkit.getPluginManager().callEvent(secondCountEvent);//Fires an event and triggers CounterEndListener
             if (time <= 0) {
-
-                Bukkit.getScheduler().runTask(sg, new Runnable() {
-                    @Override
-                    public void run() {
-                        CounterEndEvent event = new CounterEndEvent();
-                        Bukkit.getPluginManager().callEvent(event);//Fires an event and triggers CounterEndListener
-                    }
-                });
+                CounterEndEvent event = new CounterEndEvent();
+                Bukkit.getPluginManager().callEvent(event);//Fires an event and triggers CounterEndListener
 
                 this.stop();
 

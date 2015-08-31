@@ -4,6 +4,7 @@ import org.bukkit.entity.Player;
 import pl.grzegorz2047.survivalgames.WorldController.WorldManager;
 import pl.grzegorz2047.survivalgames.runnable.Counter;
 import pl.grzegorz2047.survivalgames.spawn.Spawn;
+import pl.grzegorz2047.survivalgames.stats.ServerStats;
 import pl.grzegorz2047.survivalgames.user.User;
 import pl.grzegorz2047.survivalgames.votesystem.Vote;
 
@@ -22,9 +23,35 @@ public class Game {
     private Spawn spawn;
     private Vote vote;
     private WorldManager wm;
+    ServerStats stats;
+
+    private String lobbyServer = "Lobby_survivalGames";
+
+    private int mainTime = 1 * 60;//in seconds
+    private int dmTime = 3 * 60;
+    private boolean protection = true;
+    private int protectionTime = 30;//in seconds
+    private Game ghostUtil;
+
+    public boolean isProtection() {
+        return protection;
+    }
+
+    public void setProtection(boolean protection) {
+        this.protection = protection;
+    }
+
+    public int getProtectionTime() {
+        return protectionTime;
+    }
+
+    public void setProtectionTime(int protectionTime) {
+        this.protectionTime = protectionTime;
+    }
 
     public Game(SurvivalGames sg) {
         String worldName = "MapaSG";
+        this.stats = new ServerStats(sg);
         this.wm = new WorldManager();
         this.wm.unloadWorld(worldName);
         try {
@@ -47,9 +74,36 @@ public class Game {
         return wm;
     }
 
+    public int getMainTime() {
+        return mainTime;
+    }
+
+    public void setDeathMatch(boolean deathMatch) {
+        this.deathMatch = deathMatch;
+    }
+
+    public int getDmTime() {
+        return dmTime;
+    }
+
+    public ServerStats getStats() {
+        return stats;
+    }
+
+    public String getLobbyServer() {
+        return lobbyServer;
+    }
+
+    public Game getGhostUtil() {
+        return ghostUtil;
+    }
+
+
     public enum GameState {WAITING, STARTING, INGAME, RESTARTING}
 
-
+    public Map<String, User> getPlayers() {
+        return players;
+    }
 
     private GameState state = GameState.WAITING;
 
@@ -61,12 +115,28 @@ public class Game {
         this.state = state;
     }
 
-    public void start() {
+    public boolean startGame() {
         if (this.getGameState().equals(GameState.WAITING)) {
             Counter counter = new Counter(sg, 10);
             counter.start();
             this.setGameState(Game.GameState.STARTING);
+            return true;
         }
+        return false;
+    }
+
+    private boolean deathMatch = false;
+
+    public boolean isDeathMatch(){
+        return this.deathMatch;
+    }
+
+    public boolean startDeatchMatch(){
+        if(isDeathMatch()){
+           return false;
+        }
+        this.deathMatch = true;
+        return true;
     }
 
     public boolean isInGame() {
@@ -90,5 +160,15 @@ public class Game {
         this.getSpawn().displacePlayer(user);
         this.players.remove(p.getName());
     }
+
+    public void end(){
+
+    }
+
+    public void reset(){
+
+    }
+
+
 
 }
