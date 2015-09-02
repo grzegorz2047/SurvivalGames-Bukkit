@@ -1,6 +1,5 @@
 package pl.grzegorz2047.survivalgames.commands;
 
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -20,8 +19,8 @@ public class StartArg extends Arg {
 
     @Override
     protected void execute(CommandSender sender) {
-        if (!sg.getGame().isInGame()) {
-            sg.getGame().startGame();
+        if (!sg.getGameManager().isInGame()) {
+            sg.getGameManager().startGame();
         } else {
             String answer = "Arena juz odlicza czas badz jest podczas gry!";
             if (sender instanceof Player) {

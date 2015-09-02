@@ -23,24 +23,29 @@ public class JoinListener implements Listener {
     @EventHandler
     //TODO Make sure that event is firing for PLAYER not for null! scheduler?
     void onJoin(PlayerJoinEvent e) {
-        Player p = e.getPlayer();
-        if(p == null){
+        Player joinedPlayer = e.getPlayer();
+        if(joinedPlayer == null){
             return;
         }
         e.setJoinMessage(null);
         User user;
-        if(!sg.getGame().isInGame()){
-            Bukkit.broadcastMessage(MsgManager.msg(p.getDisplayName() + " dolaczyl do areny!"));
-           user = sg.getGame().addPlayer(p, false);
+        if(!sg.getGameManager().isInGame()){
+            Bukkit.broadcastMessage(MsgManager.msg(joinedPlayer.getName() + " dolaczyl do areny jako "+sg.getGameManager().getStats().getMinMaxPlayers(true)));
+            user = sg.getGameManager().addPlayer(joinedPlayer, false);
+            sg.getGameManager().checkRequirementToStart();
 
         }else{
-            user = sg.getGame().addPlayer(p, true);
-            sg.getGame().getGhostUtil().addPlayer(p);
+            user = sg.getGameManager().addPlayer(joinedPlayer, true);
+            sg.getGameManager().getGhostUtil().addPlayer(joinedPlayer);
         }
-        ScoreboardUtil sc = new ScoreboardUtil(p, true);
-        sc.setScore(sc.getObjective(), sc.getScMoney(), user.getMoney());
+        ScoreboardUtil sc = new ScoreboardUtil(joinedPlayer, true);
         sc.setScore(sc.getObjective(), sc.getScKills(), user.getKills());
-        sc.setDisplayName(TimeUtil.formatHHMMSS(0) + sc.getMinigamePrefix() + sg.getGame().getStats().getMinMaxPlayers());
+        sc.setScore(sc.getObjective(), sc.getScWins(), user.getWins());
+        for(Player player : Bukkit.getOnlinePlayers()){
+            sc = new ScoreboardUtil(player, false);
+            sc.setDisplayName(TimeUtil.formatHHMMSS(0) + sc.getMinigamePrefix() + sg.getGameManager().getStats().getMinMaxPlayers(false));
+        }
+
 
     }
 }

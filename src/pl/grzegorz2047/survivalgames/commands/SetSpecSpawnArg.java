@@ -28,13 +28,16 @@ public class SetSpecSpawnArg extends Arg {
             double pitch = player.getLocation().getPitch();
             double yaw = player.getLocation().getYaw();
             String worldName = player.getLocation().getWorld().getName();
+
             SpawnPoint sp = new SpawnPoint(x, y, z, pitch, yaw, worldName);
-            sg.getGame().getSpawn().setSpectatorLoc(player.getLocation());
+            sg.getGameManager().getSpawnManager().setSpectatorLoc(player.getLocation());
+
+
             StringBuilder sb = new StringBuilder();
             sb.append(sp.getX()).append(':').append(sp.getY()).append(':').append(sp.getZ()).append(':').append(sp.getPitch()).append(':').append(sp.getYaw()).append(':').append(sp.getWorldName());
             String cords = sb.toString();
-            sg.getMapfileHandler().getConfig().set("spawns.spectator", cords);
-            sg.getMapfileHandler().save();
+            sg.getGameManager().getSpawnManager().getSpawnfileHandler().getConfig().set("spawns.spectator", cords);
+            sg.getGameManager().getSpawnManager().getSpawnfileHandler().save();
 
             player.sendMessage(ChatColor.GREEN + "Pomyslnie utworzono spawn dla spectatora!");
 

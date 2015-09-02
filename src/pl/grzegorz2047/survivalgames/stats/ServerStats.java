@@ -1,6 +1,6 @@
 package pl.grzegorz2047.survivalgames.stats;
 
-import pl.grzegorz2047.survivalgames.MsgManager;
+import org.bukkit.entity.Player;
 import pl.grzegorz2047.survivalgames.SurvivalGames;
 import pl.grzegorz2047.survivalgames.user.User;
 
@@ -18,7 +18,7 @@ public class ServerStats {
     public int getActivePlayers() {
         int activePlayers = 0;
         //MsgManager.debug("Liczba userow "+playerSize);
-        for (User u : sg.getGame().getPlayers().values()) {
+        for (User u : sg.getGameManager().getPlayers().values()) {
             if (!u.isSpectator()) {
                 //MsgManager.debug("Gracz "+u.getUsername()+" gra ");
                 activePlayers++;
@@ -28,8 +28,27 @@ public class ServerStats {
         return activePlayers;
     }
 
-    public String getMinMaxPlayers(){
-        return "["+this.getActivePlayers()+"/"+sg.getGame().getSpawn().getSpawnPoints().size()+"]";
+    public String getMinMaxPlayers(boolean isDuringJoin) {
+        if(isDuringJoin){
+            return "(" + (this.getActivePlayers()+1) + "/" + sg.getGameManager().getSpawnManager().getSpawnPoints().size() + ")";
+        }
+        return "(" + this.getActivePlayers() + "/" + sg.getGameManager().getSpawnManager().getSpawnPoints().size() + ")";
+    }
+
+    public Player getLastActivePlayer() {
+        int activePlayers = getActivePlayers();
+        //MsgManager.debug("Liczba userow "+playerSize);
+        if (activePlayers == 1) {
+            for (User u : sg.getGameManager().getPlayers().values()) {
+                if (!u.isSpectator()) {
+                    return u.getPlayer();
+                    //MsgManager.debug("Gracz "+u.getUsername()+" gra ");
+                }
+            }
+        }
+
+
+        return null;
     }
 
 }

@@ -5,21 +5,12 @@ package pl.grzegorz2047.survivalgames.files;/*
  */
 
 
-
-import java.io.ByteArrayOutputStream;
-import java.io.DataOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import org.bukkit.Bukkit;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import pl.grzegorz2047.survivalgames.SurvivalGames;
+
+import java.io.*;
 
 /**
  *
@@ -43,7 +34,7 @@ public class YmlFileHandler {
         this.file = new File(path, this.filename+".yml");
         System.out.println(path+" sciezka dla "+name);
         this.config = new YamlConfiguration();
-        if(!file.exists()){
+        if(!file.exists()){//Copy from plugin.jar
             System.out.println("Plik "+this.filename+" nie istnieje!");
             try {
                 copyFile();
@@ -77,7 +68,12 @@ public class YmlFileHandler {
     }
 	private void copyFile() throws Exception {
         this.file.getParentFile().mkdirs();
-        kopiujPlik(sg.getResource(this.filename), this.file);
+        if(sg.getResource(this.filename) != null){
+            kopiujPlik(sg.getResource(this.filename), this.file);
+        }else{
+            System.out.println("Plik "+this.filename+" nie jest dolaczony do pluginu. Zostanie utworzony przy zapisie danych");
+        }
+
 	}
 	
     

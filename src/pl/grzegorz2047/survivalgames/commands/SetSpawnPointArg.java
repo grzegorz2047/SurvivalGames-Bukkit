@@ -32,7 +32,7 @@ public class SetSpawnPointArg extends Arg {
             String worldName = player.getLocation().getWorld().getName();
             SpawnPoint spawnPoint = new SpawnPoint(x, y, z,pitch, yaw, worldName);
 
-            List<SpawnPoint> spawns = sg.getGame().getSpawn().getSpawnPoints();
+            List<SpawnPoint> spawns = sg.getGameManager().getSpawnManager().getSpawnPoints();
             spawns.add(spawnPoint);
 
             player.sendMessage(ChatColor.GREEN + "Pomyslnie utworzono spawn gracza o nr. " + spawns.size());

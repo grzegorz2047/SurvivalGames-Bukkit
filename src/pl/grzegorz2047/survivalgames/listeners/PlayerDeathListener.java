@@ -11,6 +11,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 import pl.grzegorz2047.survivalgames.MsgManager;
 import pl.grzegorz2047.survivalgames.SurvivalGames;
+import pl.grzegorz2047.survivalgames.permission.Permission;
 import pl.grzegorz2047.survivalgames.utils.BungeeUtil;
 
 import java.util.Iterator;
@@ -30,12 +31,12 @@ public class PlayerDeathListener implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onDeath(final PlayerDeathEvent e) {
         final Player player = e.getEntity();
-        sg.getGame().getPlayers().get(player.getName()).setSpectator(true);
+        sg.getGameManager().getPlayers().get(player.getName()).setSpectator(true);
         if (!sg.getServer().getPlayer(player.getName()).isOnline()) {
             return;
         }
 
-        if (player.hasPermission(Permission.PERMISSIONS_VIP)) {
+        if (player.hasPermission(Permission.PERMISSIONS_VIP) || sg.isDebugMode()) {
             player.setHealth(player.getMaxHealth());
             new BukkitRunnable() {
                 @Override
@@ -43,7 +44,7 @@ public class PlayerDeathListener implements Listener {
                     player.setHealth(player.getMaxHealth());
 
                     sg.
-                            getGame().
+                            getGameManager().
                             getGhostUtil().
                             addPlayer(player);
                 }
@@ -61,6 +62,10 @@ public class PlayerDeathListener implements Listener {
             if (item.getType() == Material.COMPASS) {
                 i.remove();
             }
+        }
+        int activePlayers = sg.getGameManager().getStats().getActivePlayers();
+        if(activePlayers == 1){
+            sg.getGameManager().end(activePlayers);
         }
     }
 }

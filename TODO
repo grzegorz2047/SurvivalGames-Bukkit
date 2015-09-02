@@ -1,5 +1,4 @@
 Randomize chest content
-Save somewhere spawnpoints
 write commands for:
 - vote
 - stop
@@ -8,7 +7,6 @@ write commands for:
 
 Extensive testing
 Make player classes?
-Resetting map
 connect with db and?
 
 scoreboard data
@@ -26,9 +24,7 @@ pushing spect away from players alive (neksi code)
 
 use ServerStats to follow kills, spectators, active players
 
-exptionals when liany, trawa itd.
-
-add spectator spawn
+4 slots for vips?
 
 do it
 

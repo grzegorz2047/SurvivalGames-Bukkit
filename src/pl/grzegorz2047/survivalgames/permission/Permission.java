@@ -1,4 +1,4 @@
-package pl.grzegorz2047.survivalgames.listeners;
+package pl.grzegorz2047.survivalgames.permission;
 
 /**
  * Created by Grzegorz2047. 31.08.2015.

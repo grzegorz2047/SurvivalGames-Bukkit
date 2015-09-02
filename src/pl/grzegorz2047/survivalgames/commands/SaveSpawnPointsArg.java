@@ -26,14 +26,14 @@ public class SaveSpawnPointsArg extends Arg{
         if (sender instanceof Player) {
             Player player = (Player) sender;
 
-            List<SpawnPoint> spawnPointLists = sg.getGame().getSpawn().getSpawnPoints();
+            List<SpawnPoint> spawnPointLists = sg.getGameManager().getSpawnManager().getSpawnPoints();
 
             if(spawnPointLists.isEmpty()){
                 player.sendMessage(MsgManager.msg(ChatColor.RED + "Nie zostal zdefiniowany zaden SpawnPoint"));
                 return;
             }else{
-                YmlFileHandler mapConfig = sg.getMapfileHandler();
-                sg.getGame().getSpawn().saveSpawnToFile(mapConfig);
+                YmlFileHandler mapConfig = sg.getGameManager().getSpawnManager().getSpawnfileHandler();
+                sg.getGameManager().getSpawnManager().saveSpawnToFile(mapConfig);
                 player.sendMessage(MsgManager.msg(ChatColor.GREEN + "Pomyslnie zostaly zapisane SpawnPointy"));
             }
 

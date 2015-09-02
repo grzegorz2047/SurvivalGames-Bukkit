@@ -42,4 +42,13 @@ public class User {
     public void setSpectator(boolean spectator) {
         this.spectator = spectator;
     }
+
+    public int getWins() {
+        return wins;
+    }
+
+    public void heal() {
+        this.getPlayer().setHealth(this.getPlayer().getMaxHealth());
+        this.getPlayer().setFoodLevel(20);
+    }
 }

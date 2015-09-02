@@ -55,7 +55,7 @@ public class GhostUtil {
         ghostTeam.setCanSeeFriendlyInvisibles(true);
     }
 
-    private void createTask(Plugin plugin) {
+    public void createTask(Plugin plugin) {
         task = Bukkit.getScheduler().runTaskTimer(plugin, new Runnable() {
             @Override
             public void run() {
@@ -122,8 +122,8 @@ public class GhostUtil {
     public void teleportPlayer(Player player){
         player.teleport(((SurvivalGames)
                 Bukkit.getPluginManager().getPlugin("SurvivalGames"))
-                .getGame().
-                        getSpawn().
+                .getGameManager().
+                        getSpawnManager().
                         getSpectatorLoc());
         /*Player closestPlayer = getClosestPlayer(player);
         int y = player.getWorld().getHighestBlockYAt(player.getLocation());

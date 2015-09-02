@@ -1,10 +1,7 @@
 package pl.grzegorz2047.survivalgames.WorldController;
 
 import org.apache.commons.io.FileUtils;
-import org.bukkit.Bukkit;
-import org.bukkit.World;
-import org.bukkit.WorldCreator;
-import org.bukkit.WorldType;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
 import pl.grzegorz2047.survivalgames.MsgManager;
 
@@ -40,7 +37,7 @@ public class WorldManager {
         creator.generator(new AirGenerator());
         creator.type(WorldType.FLAT);
 
-        Bukkit.getWorlds().get(0).setAutoSave(false);
+//World being created again
         World world = Bukkit.getServer().createWorld(creator);
         world.setAutoSave(false);
         world.setDifficulty(Bukkit.getWorlds().get(0).getDifficulty());
@@ -50,6 +47,14 @@ public class WorldManager {
         world.setTime(0);
         world.setWeatherDuration(20 * 60 * 20);
         world.setGameRuleValue("doDaylightCycle","false");
+
+        //World 0 with some changes
+        World w0 = Bukkit.getWorlds().get(0);
+        w0.setAutoSave(false);
+
+        for(Chunk chunk:  w0.getLoadedChunks()){
+            chunk.unload();
+        }
     }
 
     public void unloadWorld(String worldName) {

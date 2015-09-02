@@ -1,5 +1,6 @@
 package pl.grzegorz2047.survivalgames.listeners;
 
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -20,13 +21,27 @@ public class PlayerDamageListener implements Listener {
 
     @EventHandler
     public void entityDamege(EntityDamageByEntityEvent e) {
-        if(!sg.getGame().isInGame() || sg.getGame().isProtection()){
+        if(!(e.getDamager() instanceof Player)){
+            return;
+        }
+        Player player = (Player)e.getDamager();
+        if(sg.getGameManager().getPlayers().get(player.getName()).isSpectator()){
+            e.setCancelled(true);
+        }
+        if(!sg.getGameManager().isInGame() || sg.getGameManager().isProtection()){
             e.setCancelled(true);
         }
     }
     @EventHandler
     public void entityDamege(EntityDamageEvent e) {
-        if(!sg.getGame().isInGame() || sg.getGame().isProtection()){
+        if(!(e.getEntity() instanceof Player)){
+            return;
+        }
+        Player player = (Player)e.getEntity();
+        if(sg.getGameManager().getPlayers().get(player.getName()).isSpectator()){
+            e.setCancelled(true);
+        }
+        if(!sg.getGameManager().isInGame() || sg.getGameManager().isProtection()){
             e.setCancelled(true);
         }
     }
@@ -34,7 +49,7 @@ public class PlayerDamageListener implements Listener {
 /*
     @EventHandler
     public void entityDamege(EntityDamageByEntityEvent ev) {
-        if(sg.getGame().isInGame()){
+        if(sg.getGameManager().isInGame()){
             final Player dmger;
             if (ev.getDamager() instanceof Player) {
                 dmger = (Player) ev.getDamager();

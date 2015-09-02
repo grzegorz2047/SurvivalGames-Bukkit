@@ -13,18 +13,20 @@ import java.util.List;
 /**
  * Created by Grzegorz2047. 28.08.2015.
  */
-public class Spawn {
+public class SpawnManager {
 
-
+    YmlFileHandler spawnfileHandler;
     private Location spectatorLoc;
     private List<SpawnPoint> spawnPoints = new ArrayList<SpawnPoint>();
 
     private SurvivalGames sg;
 
-    public Spawn(SurvivalGames sg) {
+    public SpawnManager(SurvivalGames sg) {
         this.sg = sg;
-        this.loadSpawnFromFile(sg.getMapfileHandler());
-        this.loadSpecLocFromFile(sg.getMapfileHandler());
+        spawnfileHandler = new YmlFileHandler(sg, sg.getDataFolder().getAbsolutePath(), "Spawns");
+        spawnfileHandler.load();
+        this.loadSpawnFromFile(spawnfileHandler);
+        this.loadSpecLocFromFile(spawnfileHandler);
     }
 
     public Location getSpectatorLoc() {
@@ -133,4 +135,7 @@ public class Spawn {
         }
     }
 
+    public YmlFileHandler getSpawnfileHandler() {
+        return spawnfileHandler;
+    }
 }

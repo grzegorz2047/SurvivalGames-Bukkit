@@ -12,8 +12,9 @@ import pl.grzegorz2047.survivalgames.SurvivalGames;
 public class PlayerQuitListener implements Listener {
 
     SurvivalGames sg;
+
     public PlayerQuitListener(SurvivalGames sg) {
-    this.sg = sg;
+        this.sg = sg;
     }
 
     @EventHandler
@@ -21,7 +22,10 @@ public class PlayerQuitListener implements Listener {
         Player p = e.getPlayer();
 
         e.setQuitMessage(null);
-        sg.getGame().removePlayer(p);
-        Bukkit.broadcastMessage(MsgManager.msg(p.getDisplayName() + " opuscil serwer!"));
+        sg.getGameManager().removePlayer(p);
+        Bukkit.broadcastMessage(MsgManager.msg(p.getName() + " opuscil serwer!"));
+        if (!sg.getGameManager().isInGame()) {
+            sg.getGameManager().checkRequirementToStop();
+        }
     }
 }

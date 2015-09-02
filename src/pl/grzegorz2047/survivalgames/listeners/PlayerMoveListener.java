@@ -26,7 +26,7 @@ public class PlayerMoveListener implements Listener {
     @EventHandler
     public void onMove(PlayerMoveEvent e) {
 
-        if (!sg.getGame().isInGame() /*&& !sg.isDebugMode()*/){
+        if (!sg.getGameManager().isInGame() /*&& !sg.isDebugMode()*/){
             if(e.getFrom().distance(e.getTo())>0){
                 e.setTo(e.getFrom());
             }
@@ -38,9 +38,6 @@ public class PlayerMoveListener implements Listener {
         for (Entity entity : entities) {
             if (entity.getType().equals(EntityType.PLAYER)) {
                 Player player = (Player) entity;
-                if (p.hasPermission(Permission.PERMISSIONS_VIP)) {
-                    return;
-                }
                 if (p.hasPotionEffect(PotionEffectType.INVISIBILITY) && !player.hasPotionEffect(PotionEffectType.INVISIBILITY)) {
                     Vector vector = e.getFrom().toVector().subtract(player.getLocation().toVector());
                     Vector vector_;

@@ -1,6 +1,6 @@
 package pl.grzegorz2047.survivalgames.votesystem;
 
-import pl.grzegorz2047.survivalgames.Game;
+import pl.grzegorz2047.survivalgames.GameManager;
 import pl.grzegorz2047.survivalgames.SurvivalGames;
 import pl.grzegorz2047.survivalgames.user.User;
 
@@ -32,7 +32,7 @@ public class Vote {
     }
 
     public boolean isEnoughToStart() {
-        if(sg.getGame().getGameState().equals(Game.GameState.WAITING)){
+        if(sg.getGameManager().getGameState().equals(GameManager.GameState.WAITING)){
 
         }
 

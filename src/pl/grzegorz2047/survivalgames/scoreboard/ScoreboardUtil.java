@@ -13,7 +13,8 @@ public class ScoreboardUtil {
 
     private String scKills = "Zabojstwa";
     private String scMoney = "Monety";
-    private String scAlive = "Zywi";
+    private String scAlive = "Pozostalo";
+    private String scWins = "Wygrane";
 
     public String getScKills() {
         return scKills;
@@ -169,5 +170,9 @@ public class ScoreboardUtil {
 
     public String getMinigamePrefix() {
         return minigamePrefix;
+    }
+
+    public String getScWins() {
+        return scWins;
     }
 }
