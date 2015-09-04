@@ -10,33 +10,42 @@ import pl.grzegorz2047.survivalgames.user.User;
 public class ServerStats {
 
     private SurvivalGames sg;
+    private int activePlayers;
+    private int specPlayers;
 
     public ServerStats(SurvivalGames sg) {
         this.sg = sg;
     }
 
-    public int getActivePlayers() {
+    public void updateStats() {
         int activePlayers = 0;
+        int specPlayers = 0;
         //MsgManager.debug("Liczba userow "+playerSize);
         for (User u : sg.getGameManager().getPlayers().values()) {
             if (!u.isSpectator()) {
                 //MsgManager.debug("Gracz "+u.getUsername()+" gra ");
                 activePlayers++;
+            }else{
+                specPlayers++;
             }
         }
 
-        return activePlayers;
+        this.activePlayers = activePlayers;
+        this.specPlayers = specPlayers;
+    }
+    public int getSpectatingPlayers() {
+        return this.specPlayers;
     }
 
     public String getMinMaxPlayers(boolean isDuringJoin) {
         if(isDuringJoin){
-            return "(" + (this.getActivePlayers()+1) + "/" + sg.getGameManager().getSpawnManager().getSpawnPoints().size() + ")";
+            return "(" + (this.activePlayers+1) + "/" + sg.getGameManager().getSpawnManager().getSpawnPoints().size() + ")";
         }
-        return "(" + this.getActivePlayers() + "/" + sg.getGameManager().getSpawnManager().getSpawnPoints().size() + ")";
+        return "(" + this.activePlayers + "/" + sg.getGameManager().getSpawnManager().getSpawnPoints().size() + ")";
     }
 
     public Player getLastActivePlayer() {
-        int activePlayers = getActivePlayers();
+        int activePlayers = this.activePlayers;
         //MsgManager.debug("Liczba userow "+playerSize);
         if (activePlayers == 1) {
             for (User u : sg.getGameManager().getPlayers().values()) {
@@ -46,9 +55,10 @@ public class ServerStats {
                 }
             }
         }
-
-
         return null;
     }
 
+    public int getActivePlayers() {
+        return activePlayers;
+    }
 }

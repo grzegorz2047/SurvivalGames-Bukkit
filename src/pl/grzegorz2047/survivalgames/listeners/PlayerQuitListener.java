@@ -20,6 +20,9 @@ public class PlayerQuitListener implements Listener {
     @EventHandler
     void onQuit(PlayerQuitEvent e) {
         Player p = e.getPlayer();
+        if(p == null){
+            return;
+        }
 
         e.setQuitMessage(null);
         sg.
@@ -28,6 +31,12 @@ public class PlayerQuitListener implements Listener {
         Bukkit.broadcastMessage(MsgManager.msg(p.getName() + " opuscil serwer!"));
         if (!sg.getGameManager().isInGame()) {
             sg.getGameManager().checkRequirementToStop();
+        }
+        sg.getGameManager().getStats().updateStats();
+        int activePlayers = sg.getGameManager().getStats().getActivePlayers();
+        MsgManager.debug("Ilosc aktywnych graczy przy playerquitevent "+activePlayers);
+        if(activePlayers == 1 && sg.getGameManager().isInGame()){
+            sg.getGameManager().end(activePlayers);
         }
     }
 }

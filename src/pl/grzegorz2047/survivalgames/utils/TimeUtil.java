@@ -1,5 +1,7 @@
 package pl.grzegorz2047.survivalgames.utils;
 
+import org.bukkit.ChatColor;
+
 /**
  * Created by Grzegorz2047. 31.08.2015.
  */
@@ -10,7 +12,7 @@ public class TimeUtil {
             int minutes = secs / 60,
                     seconds = secs % 60;
 
-            return (minutes < 10 ? "0" : "") + minutes + ":"
+            return ChatColor.GRAY+(minutes < 10 ? "0" : "") + minutes + ":"
                     + (seconds < 10 ? "0" : "") + seconds;
         } else {
             int hours = secs / 3600,
@@ -18,7 +20,7 @@ public class TimeUtil {
                     minutes = divider / 60,
                     seconds = divider % 60;
 
-            return (hours < 10 ? "0" : "") + hours + ":"
+            return ChatColor.GRAY+(hours < 10 ? "0" : "") + hours + ":"
                     + (minutes < 10 ? "0" : "") + minutes + ":"
                     + (seconds < 10 ? "0" : "") + seconds;
         }

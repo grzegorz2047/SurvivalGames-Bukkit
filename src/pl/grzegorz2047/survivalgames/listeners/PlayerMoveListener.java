@@ -1,16 +1,10 @@
 package pl.grzegorz2047.survivalgames.listeners;
 
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
-import org.bukkit.potion.PotionEffectType;
-import org.bukkit.util.Vector;
+import pl.grzegorz2047.survivalgames.MsgManager;
 import pl.grzegorz2047.survivalgames.SurvivalGames;
-
-import java.util.List;
 
 /**
  * Created by Grzegorz2047. 28.08.2015.
@@ -25,8 +19,11 @@ public class PlayerMoveListener implements Listener {
 
     @EventHandler
     public void onMove(PlayerMoveEvent e) {
-        if(sg.getGameManager().isDeathMatch()){
-
+        if(sg.getGameManager().isDeathMatch() && !sg.getGameManager().getPlayers().get(e.getPlayer().getName()).isSpectator()){
+            if(sg.getGameManager().getSpawnManager().getSpectatorLoc().distance(e.getTo())>50){//Max dm distance from spawn
+                e.setTo(e.getFrom());
+                e.getPlayer().sendMessage(MsgManager.msg("Nie mozna opuscic pola bitwy!"));
+            }
         }
 
 
@@ -35,7 +32,7 @@ public class PlayerMoveListener implements Listener {
                 e.setTo(e.getFrom());
             }
         }
-        Player p = e.getPlayer();
+       /* Player p = e.getPlayer();
         List<Entity> entities = p.getNearbyEntities(5D, 10D, 5D);
 
         for (Entity entity : entities) {
@@ -52,6 +49,6 @@ public class PlayerMoveListener implements Listener {
                     p.setVelocity(vector_);
                 }
             }
-        }
+        }*/
     }
 }

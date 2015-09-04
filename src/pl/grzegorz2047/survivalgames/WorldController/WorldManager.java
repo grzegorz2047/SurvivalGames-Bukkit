@@ -50,9 +50,8 @@ public class WorldManager {
         world.setMonsterSpawnLimit(0);//Wylacza potwory?
         world.setStorm(false);
         world.setTime(0);
-        world.setGameRuleValue("doDaylightCycle","false");
+        world.setGameRuleValue("doDaylightCycle", "false");
         world.setWeatherDuration(20 * 60 * 20);
-
 
         //World 0 with some changes
         World w0 = Bukkit.getWorlds().get(0);
@@ -73,5 +72,27 @@ public class WorldManager {
         Bukkit.unloadWorld(Bukkit.getWorld(worldName), false);
 
     }
+   /* public String getAuthorsString(String authorColor, String color) {
+        Validate.notNull(authorColor);
+        Validate.notNull(color);
+        if (this.getAuthors() == null) {
+            return authorColor + Color.ITALIC + "(nieznani)" + Color.RESET;
+        } else {
+            StringBuilder builder = new StringBuilder();
+            for (int i = 0; i < this.getAuthors().length; i++) {
+                if (i != 0) {
+                    builder.append(color);
+                    if (this.getAuthors().length == (i + 1)) {
+                        builder.append(" oraz ");
+                    } else {
+                        builder.append(", ");
+                    }
+                }
+                builder.append(authorColor).append(this.authors[i]);
+            }
+            return Color.RESET + builder.toString();
+        }
+    }*/
+
 
 }

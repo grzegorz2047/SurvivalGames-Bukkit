@@ -10,12 +10,17 @@ public class User {
 
     private String username;
     private boolean spectator;
-
+    private boolean playedBefore;
     private int money, kills, deaths, wins = 0;//?
 
     public User(String username, boolean spectator) {
         this.username = username;
         this.spectator = spectator;
+        if (!spectator) {
+            playedBefore = true;
+        } else {
+            playedBefore = false;
+        }
     }
 
     public String getUsername() {
@@ -50,5 +55,13 @@ public class User {
     public void heal() {
         this.getPlayer().setHealth(this.getPlayer().getMaxHealth());
         this.getPlayer().setFoodLevel(20);
+    }
+
+    public boolean hasPlayedBefore() {
+        return this.playedBefore;
+    }
+
+    public void setKills(int kills) {
+        this.kills = kills;
     }
 }

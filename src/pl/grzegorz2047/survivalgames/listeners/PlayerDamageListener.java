@@ -5,6 +5,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
+import pl.grzegorz2047.survivalgames.MsgManager;
 import pl.grzegorz2047.survivalgames.SurvivalGames;
 
 /**
@@ -26,14 +27,19 @@ public class PlayerDamageListener implements Listener {
         }
         Player player = (Player)e.getDamager();
         if(sg.getGameManager().getPlayers().get(player.getName()).isSpectator()){
+            player.sendMessage(MsgManager.msg("Nie mozesz uderzyc graczy podczas obserwowania graczy"));
             e.setCancelled(true);
         }
         if(!sg.getGameManager().isInGame() || sg.getGameManager().isProtection()){
+            player.sendMessage(MsgManager.msg("Nie mozesz uderzyc graczy podczas ochrony"));
             e.setCancelled(true);
         }
     }
     @EventHandler
     public void entityDamege(EntityDamageEvent e) {
+        if(e.getCause().equals(EntityDamageEvent.DamageCause.LIGHTNING)){
+            e.setCancelled(true);
+        }
         if(!(e.getEntity() instanceof Player)){
             return;
         }

@@ -73,6 +73,8 @@ public class SurvivalGames extends JavaPlugin {
         pl.registerEvents(new PlayerPickDropListener(sg), this);
         pl.registerEvents(new PlayerBucketListener(sg), this);
         pl.registerEvents(new PlayerInteractListener(sg), this);
+        pl.registerEvents(new LightningStrikeListeners(sg), this);
+        pl.registerEvents(new PlayerTeleportTrackingListeners(sg), this);
     }
 
     public void initManagers() {

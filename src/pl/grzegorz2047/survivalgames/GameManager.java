@@ -33,7 +33,7 @@ public class GameManager {
     ServerStats stats;
     private int minReqPlayers;//(active/2);
 
-    private int mainTime = 6 * 60;//in seconds
+    private int mainTime = 3 * 60;//in seconds
     private int dmTime = 3 * 60;
     private boolean protection = true;
     private int protectionTime = 30;//in seconds
@@ -130,7 +130,7 @@ public class GameManager {
 
     public boolean startGame() {
         if (this.getGameState().equals(GameState.WAITING)) {
-            Counter counter = new Counter(sg, 10);
+            Counter counter = new Counter(sg, 20);//Start counting down to start
             counter.start();
             this.setGameState(GameManager.GameState.STARTING);
             return true;
@@ -144,7 +144,7 @@ public class GameManager {
         return this.deathMatch;
     }
 
-    public boolean startDeatchMatch() {
+    public boolean startDeathMatch() {
         if (isDeathMatch()) {
             return false;
         }
@@ -185,7 +185,10 @@ public class GameManager {
 
     public void removePlayer(Player p) {
         User user = this.players.get(p.getName());
-        this.getSpawnManager().displacePlayer(user);
+        if(user.hasPlayedBefore()){
+            this.getSpawnManager().displacePlayer(user);
+        }
+
         this.players.remove(p.getName());
         sg.getGameManager().getGhostUtil().removePlayer(p);
     }
@@ -209,8 +212,8 @@ public class GameManager {
             public void run() {
                 for (Player p : Bukkit.getOnlinePlayers()) {
                     BungeeUtil.changeServer(sg, p, BungeeUtil.lobbyServer);
-                    sg.resetPlugin();
                 }
+                sg.resetPlugin();
             }
         }, 5 * 20l);
 
@@ -218,6 +221,7 @@ public class GameManager {
 
 
     public void checkRequirementToStart() {
+        this.stats.updateStats();
         int active = this.stats.getActivePlayers();
         if (active >= this.minReqPlayers) {
             this.startGame();
@@ -225,6 +229,7 @@ public class GameManager {
     }
 
     public void checkRequirementToStop() {
+        this.stats.updateStats();
         int active = this.stats.getActivePlayers();
         if (active <= this.minReqPlayers) {
             Bukkit.getScheduler().cancelTasks(sg);

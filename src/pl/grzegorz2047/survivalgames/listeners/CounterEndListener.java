@@ -32,12 +32,17 @@ public class CounterEndListener implements Listener {
             counter.start();
             Bukkit.broadcastMessage(MsgManager.msg("Zostala wlaczona ochrona przed graczami na 30 sekund!"));
         } else if (g.isInGame()) {
-            if (g.isDeathMatch()) {
-                g.end(g.getStats().getActivePlayers());
+            if (g.isDeathMatch()) {//If there was a deathmatch
+                g.end(g.getStats().getActivePlayers());//end this
             } else if (!g.isDeathMatch()) {
+                if(g.getStats().getActivePlayers()== 1){//if force start was fired then turn it off
+                    g.end(g.getStats().getActivePlayers());
+                    MsgManager.debug("Gra zostala wymuszona z 1 graczem, wiec koncze gre!");
+                }
+                MsgManager.debug("Uruchamiam dm!");
                 Counter counter = new Counter(sg, g.getDmTime());
                 counter.start();
-                g.startDeatchMatch();
+                g.startDeathMatch();
 
             }
         }

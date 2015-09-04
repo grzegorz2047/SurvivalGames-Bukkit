@@ -11,10 +11,13 @@ import java.util.Map;
 public class ScoreboardUtil {
 
 
-    private String scKills = "Zabojstwa";
-    private String scMoney = "Monety";
-    private String scAlive = "Pozostalo";
-    private String scWins = "Wygrane";
+    private String scKills = ChatColor.RED+"Zabojstwa";
+    private String scMoney = ChatColor.GOLD+"Monety";
+    private String scAlive = ChatColor.GREEN+"Pozostalo";
+    private String scSpect = ChatColor.YELLOW+"Obserwatorzy";
+    private String scWins = ChatColor.GOLD+"Wygrane";
+
+    private String minigamePrefix = ChatColor.RED+" SG "+ChatColor.GRAY;
 
     public String getScKills() {
         return scKills;
@@ -28,7 +31,7 @@ public class ScoreboardUtil {
         return scAlive;
     }
 
-    private String minigamePrefix = " SG ";
+
     /************************************/
 
     private final Scoreboard scoreboard;
@@ -174,5 +177,9 @@ public class ScoreboardUtil {
 
     public String getScWins() {
         return scWins;
+    }
+
+    public String getScSpect() {
+        return scSpect;
     }
 }

@@ -12,6 +12,8 @@ import org.bukkit.scheduler.BukkitRunnable;
 import pl.grzegorz2047.survivalgames.MsgManager;
 import pl.grzegorz2047.survivalgames.SurvivalGames;
 import pl.grzegorz2047.survivalgames.permission.Permission;
+import pl.grzegorz2047.survivalgames.scoreboard.ScoreboardUtil;
+import pl.grzegorz2047.survivalgames.user.User;
 import pl.grzegorz2047.survivalgames.utils.BungeeUtil;
 
 import java.util.Iterator;
@@ -30,8 +32,17 @@ public class PlayerDeathListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onDeath(final PlayerDeathEvent e) {
+        Player k = e.getEntity().getKiller();
+        if(k != null){
+            User userKiller = sg.getGameManager().getPlayers().get(k.getName());
+            userKiller.setKills(userKiller.getKills()+1);
+            ScoreboardUtil sb = new ScoreboardUtil(k, false);
+            sb.setScore(sb.getObjective(),sb.getScKills(),userKiller.getKills());
+            k.sendMessage(MsgManager.msg("Gracz "+k.getName()+" zabil gracza "+e.getEntity().getName()));
+        }
         final Player player = e.getEntity();
         sg.getGameManager().getPlayers().get(player.getName()).setSpectator(true);
+        sg.getGameManager().getStats().updateStats();//update stats
         if (!sg.getServer().getPlayer(player.getName()).isOnline()) {
             return;
         }
@@ -64,6 +75,7 @@ public class PlayerDeathListener implements Listener {
             }
         }
         int activePlayers = sg.getGameManager().getStats().getActivePlayers();
+        MsgManager.debug("Ilosc aktywnych graczy przy playerdeathevent "+activePlayers);
         if(activePlayers == 1){
             sg.getGameManager().end(activePlayers);
         }

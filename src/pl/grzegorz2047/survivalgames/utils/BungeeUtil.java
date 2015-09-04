@@ -17,7 +17,7 @@ public class BungeeUtil {
     public static void changeServer(SurvivalGames sg, Player player, String server) {
         try {
             if(sg.isDebugMode()){
-                player.kickPlayer(MsgManager.msg("Umarles badz rozrywka zakonczyla sie dla ciebie!"));
+                player.kickPlayer(MsgManager.msg("Koniec"));
                 return;
             }
             ByteArrayOutputStream b = new ByteArrayOutputStream();
