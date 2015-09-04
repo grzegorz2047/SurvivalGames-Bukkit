@@ -25,12 +25,15 @@ public class PlayerMoveListener implements Listener {
 
     @EventHandler
     public void onMove(PlayerMoveEvent e) {
+        if(sg.getGameManager().isDeathMatch()){
+
+        }
+
 
         if (!sg.getGameManager().isInGame() /*&& !sg.isDebugMode()*/){
             if(e.getFrom().distance(e.getTo())>0){
                 e.setTo(e.getFrom());
             }
-
         }
         Player p = e.getPlayer();
         List<Entity> entities = p.getNearbyEntities(5D, 10D, 5D);

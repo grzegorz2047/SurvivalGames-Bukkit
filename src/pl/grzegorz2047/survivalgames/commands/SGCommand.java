@@ -21,17 +21,22 @@ public class SGCommand implements CommandExecutor {
         this.commands.put("savespawnpoints", new SaveSpawnPointsArg(sg));
         this.commands.put("clearSpawnPoints", new ClearSpawnPointsArg(sg));
         this.commands.put("setspecspawn", new SetSpecSpawnArg(sg));
+        this.commands.put("mem", new MemArg(sg));
+        this.commands.put("editmode", new EditModeArg(sg));
     }
 
     private final Map<String, Arg> commands = new HashMap<String, Arg>();
-
 
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (args.length != 0) {
             if (cmd.getName().equalsIgnoreCase("sg")) {
                 String subCommand = args[0].toLowerCase();//lower case to ensure that all commands are correct key
                 if (commands.get(subCommand) != null) {
-                    this.commands.get(subCommand).execute(sender);
+                    this.commands.get(subCommand).execute(sender, args);
+                    return true;
+                }else{
+                    sender.sendMessage("ten argument nie istnieje!");
+                    return true;
                 }
             }
         }

@@ -71,6 +71,7 @@ public class YmlFileHandler {
         if(sg.getResource(this.filename) != null){
             kopiujPlik(sg.getResource(this.filename), this.file);
         }else{
+            this.file.createNewFile();
             System.out.println("Plik "+this.filename+" nie jest dolaczony do pluginu. Zostanie utworzony przy zapisie danych");
         }
 

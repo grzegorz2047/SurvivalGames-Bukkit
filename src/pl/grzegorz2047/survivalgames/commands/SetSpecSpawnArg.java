@@ -18,7 +18,7 @@ public class SetSpecSpawnArg extends Arg {
     }
 
     @Override
-    protected void execute(CommandSender sender) {
+    protected void execute(CommandSender sender, String args[]) {
         if (sender instanceof Player) {
             Player player = (Player) sender;
 

@@ -4,6 +4,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import pl.grzegorz2047.survivalgames.WorldController.WorldManager;
+import pl.grzegorz2047.survivalgames.chests.ChestManager;
 import pl.grzegorz2047.survivalgames.runnable.Counter;
 import pl.grzegorz2047.survivalgames.scoreboard.ScoreboardUtil;
 import pl.grzegorz2047.survivalgames.spawn.SpawnManager;
@@ -26,13 +27,14 @@ public class GameManager {
 
     private SurvivalGames sg;
     private SpawnManager spawnManager;
+    private ChestManager chestManager;
     private Vote vote;
     private WorldManager wm;
     ServerStats stats;
-    private int minReqPlayers = 3;//(active/2);
+    private int minReqPlayers;//(active/2);
 
-    private int mainTime = 1 * 60;//in seconds
-    private int dmTime = 1 * 60;
+    private int mainTime = 6 * 60;//in seconds
+    private int dmTime = 3 * 60;
     private boolean protection = true;
     private int protectionTime = 30;//in seconds
     private GhostUtil ghostUtil;
@@ -67,7 +69,10 @@ public class GameManager {
         }
         this.sg = sg;
         this.spawnManager = new SpawnManager(sg);
+        this.chestManager = new ChestManager(sg);
         this.vote = new Vote(sg);
+        this.minReqPlayers = this.spawnManager.getSpawnPoints().size()/2;
+        sg.setIsRestarting(false);//When plugin is restarting doesnt allow them
         this.setGameState(GameState.WAITING);
     }
 
@@ -100,6 +105,10 @@ public class GameManager {
 
     public GhostUtil getGhostUtil() {
         return ghostUtil;
+    }
+
+    public ChestManager getChestManager() {
+        return chestManager;
     }
 
 
@@ -148,6 +157,7 @@ public class GameManager {
                 }
             }
         }
+        sg.getGameManager().getChestManager().fillChests();
         this.deathMatch = true;
         return true;
     }
@@ -223,6 +233,7 @@ public class GameManager {
                 ScoreboardUtil sb = new ScoreboardUtil(p, false);
                 sb.setDisplayName(TimeUtil.formatHHMMSS(0) + sb.getMinigamePrefix() + stats.getMinMaxPlayers(false));
             }
+            sg.getGameManager().setGameState(GameState.WAITING);
         }
     }
 

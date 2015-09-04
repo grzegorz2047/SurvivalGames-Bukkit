@@ -30,6 +30,9 @@ public class BlockBreakListener implements Listener {
 
     @EventHandler
     void onBlockBreak(BlockBreakEvent e) {
+        if(sg.getGameManager().getPlayers().get(e.getPlayer().getName()).isSpectator()){
+            e.setCancelled(true);
+        }
         if(!this.exceptionMaterialList.contains(e.getBlock().getType())){
             e.setCancelled(true);
         }

@@ -17,7 +17,7 @@ public class ClearSpawnPointsArg extends Arg {
     }
 
     @Override
-    protected void execute(CommandSender sender) {
+    protected void execute(CommandSender sender, String args[]) {
         sg.getGameManager().getSpawnManager().getSpawnPoints().clear();
         MsgManager.msg(ChatColor.GREEN+"Pomyslnie wyczyszczono SpawnPointy z pamieci!");
     }

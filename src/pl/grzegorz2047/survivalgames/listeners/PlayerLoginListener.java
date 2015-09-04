@@ -27,6 +27,8 @@ public class PlayerLoginListener implements Listener {
             }
         }else if(sg.getGameManager().isRestarting()){
             e.disallow(PlayerLoginEvent.Result.KICK_OTHER, MsgManager.msg(ChatColor.RED + "Arena restartuje sie"));
+        }else if(sg.isRestarting()){
+            e.disallow(PlayerLoginEvent.Result.KICK_OTHER, MsgManager.msg(ChatColor.RED + "Arena restartuje sie"));
         }
 
     }

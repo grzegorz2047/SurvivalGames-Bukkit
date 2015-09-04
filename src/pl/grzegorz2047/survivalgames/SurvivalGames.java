@@ -17,8 +17,16 @@ public class SurvivalGames extends JavaPlugin {
 
     /*                                                      */
     public static boolean debugMode = true;
+    private boolean isRestarting = false;
     /*                                                      */
 
+    public boolean isRestarting() {
+        return isRestarting;
+    }
+
+    public void setIsRestarting(boolean isRestarting) {
+        this.isRestarting = isRestarting;
+    }
 
     public boolean isDebugMode() {
         return debugMode;
@@ -64,6 +72,7 @@ public class SurvivalGames extends JavaPlugin {
         pl.registerEvents(new PlayerManipulateListeners(sg), this);
         pl.registerEvents(new PlayerPickDropListener(sg), this);
         pl.registerEvents(new PlayerBucketListener(sg), this);
+        pl.registerEvents(new PlayerInteractListener(sg), this);
     }
 
     public void initManagers() {
@@ -82,6 +91,7 @@ public class SurvivalGames extends JavaPlugin {
     }
 
     public void resetPlugin() {
+        this.isRestarting = true;
         clearMemory();
         initManagers();
     }

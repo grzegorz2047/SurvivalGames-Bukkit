@@ -1,6 +1,7 @@
 package pl.grzegorz2047.survivalgames.listeners;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -39,13 +40,23 @@ public class CountdownSecondListener implements Listener {
             if(!sg.getGameManager().isDeathMatch()){
                 if(e.getCurrentTime()<=5){
                     Bukkit.broadcastMessage(MsgManager.msg("DeathMatch rozpocznie sie za "+e.getCurrentTime()+".."));
+                    for (Player p : Bukkit.getOnlinePlayers()) {
+                        ScoreboardUtil sb = new ScoreboardUtil(p, false);
+                        sb.setDisplayName(TimeUtil.formatHHMMSS(e.getCurrentTime()) + sb.getMinigamePrefix() + stats.getMinMaxPlayers(false));
+                        sb.setScore(sb.getObjective(),sb.getScAlive(),stats.getActivePlayers());
+                        p.playSound(p.getLocation(), Sound.ORB_PICKUP,1,1);
+                    }
+
+                }else{
+                    for (Player p : Bukkit.getOnlinePlayers()) {
+                        ScoreboardUtil sb = new ScoreboardUtil(p, false);
+                        sb.setDisplayName(TimeUtil.formatHHMMSS(e.getCurrentTime()) + sb.getMinigamePrefix() + stats.getMinMaxPlayers(false));
+                        sb.setScore(sb.getObjective(),sb.getScAlive(),stats.getActivePlayers());
+                    }
                 }
+
             }
-            for (Player p : Bukkit.getOnlinePlayers()) {
-                ScoreboardUtil sb = new ScoreboardUtil(p, false);
-                sb.setDisplayName(TimeUtil.formatHHMMSS(e.getCurrentTime()) + sb.getMinigamePrefix() + stats.getMinMaxPlayers(false));
-                sb.setScore(sb.getObjective(),sb.getScAlive(),stats.getActivePlayers());
-            }
+
         } else {
             Bukkit.broadcastMessage(MsgManager.msg("Arena wystartuje za " + e.getCurrentTime() + ".."));
             for (Player p : Bukkit.getOnlinePlayers()) {
@@ -54,4 +65,5 @@ public class CountdownSecondListener implements Listener {
             }
         }
     }
+
 }

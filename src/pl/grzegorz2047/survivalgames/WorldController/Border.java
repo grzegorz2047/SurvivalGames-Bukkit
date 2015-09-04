@@ -7,13 +7,12 @@ import org.bukkit.Location;
  */
 public class Border {
 
-    private Location min;
-    private Location max;
+    private Location center;
 
-    public Border(Location min, Location max) {
-        this.min = min;
-        this.max = max;
+    public Border(Location center) {
+        this.center = center;
     }
+
 
 
 

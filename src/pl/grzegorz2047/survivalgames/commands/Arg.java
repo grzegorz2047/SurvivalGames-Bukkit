@@ -7,7 +7,7 @@ import org.bukkit.command.CommandSender;
  */
 public abstract class Arg {
 
-    protected void execute(CommandSender sender){
+    protected void execute(CommandSender sender, String args[]){
 
 
     }

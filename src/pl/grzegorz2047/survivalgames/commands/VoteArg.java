@@ -15,7 +15,7 @@ public class VoteArg extends Arg {
     }
 
     @Override
-    protected void execute(CommandSender sender) {
+    protected void execute(CommandSender sender, String args[]) {
 
     }
 }

@@ -14,6 +14,11 @@ import java.io.IOException;
 public class WorldManager {
 
     public void load(String worldName) throws IOException {
+        if(Bukkit.getOnlinePlayers().size()>0){
+            for(Player p : Bukkit.getOnlinePlayers()){
+                p.kickPlayer("Blad serwera. Zglos sie do administracji serwera!");
+            }
+        }
         File from = new File("Mapy"+File.separator+worldName);
         MsgManager.debug("From " + from.getAbsolutePath());
 
@@ -45,8 +50,9 @@ public class WorldManager {
         world.setMonsterSpawnLimit(0);//Wylacza potwory?
         world.setStorm(false);
         world.setTime(0);
-        world.setWeatherDuration(20 * 60 * 20);
         world.setGameRuleValue("doDaylightCycle","false");
+        world.setWeatherDuration(20 * 60 * 20);
+
 
         //World 0 with some changes
         World w0 = Bukkit.getWorlds().get(0);

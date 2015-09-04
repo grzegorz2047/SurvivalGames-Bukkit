@@ -8,7 +8,7 @@ import org.bukkit.command.CommandSender;
 public class ForceStartArg extends Arg {
 
     @Override
-    protected void execute(CommandSender sender) {
-        super.execute(sender);
+    protected void execute(CommandSender sender, String args[]) {
+        super.execute(sender,args);
     }
 }
