@@ -34,14 +34,14 @@ public class CountdownSecondListener implements Listener {
     void onEverySecond(CountdownSecondEvent e) {
         this.stats.updateStats();
         if (sg.getGameManager().isInGame()) {
-            if (e.getCurrentTime() == sg.getGameManager().getMainTime() - 1) {
-                for (Player p : Bukkit.getOnlinePlayers()) {
-                    if (p.hasPermission(Permission.PERMISSIONS_VIP)) {
-                        p.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 20 * 30, 1));// 30 sekundowa niewidzialnosc dla vipa
+            if (sg.getGameManager().isProtection()) {
+                if (e.getCurrentTime() == sg.getGameManager().getMainTime() - 1) {
+                    for (Player p : Bukkit.getOnlinePlayers()) {
+                        if (p.hasPermission(Permission.PERMISSIONS_VIP)) {
+                            p.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 20 * 30, 1));// 30 sekundowa niewidzialnosc dla vipa
+                        }
                     }
                 }
-            }
-            if (sg.getGameManager().isProtection()) {
                 sg.getGameManager().setProtectionTime(sg.getGameManager().getProtectionTime() - 1);
                 if (sg.getGameManager().getProtectionTime() <= 0) {
                     sg.getGameManager().setProtection(false);

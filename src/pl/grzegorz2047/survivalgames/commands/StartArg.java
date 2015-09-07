@@ -19,6 +19,10 @@ public class StartArg extends Arg {
 
     @Override
     protected void execute(CommandSender sender, String args[]) {
+        if (!sender.isOp()){
+            ((Player)sender).sendMessage(MsgManager.msg("Komenda jedynie dla administracji!"));
+            return;
+        }
         if (!sg.getGameManager().isInGame()) {
             sg.getGameManager().startGame();
         } else {

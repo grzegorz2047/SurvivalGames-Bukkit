@@ -9,5 +9,9 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="commons-io-2.4" level="project" />
     <orderEntry type="library" name="spigot-api-1.8-R0.1-SNAPSHOT" level="project" />
+    <orderEntry type="library" name="coinsmod" level="project" />
+    <orderEntry type="library" name="CGShop" level="project" />
+    <orderEntry type="library" name="cgrank" level="project" />
+    <orderEntry type="library" name="craftgamesdevelopers-servers" level="project" />
   </component>
 </module>

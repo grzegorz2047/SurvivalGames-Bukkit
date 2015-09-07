@@ -24,6 +24,10 @@ public class SaveSpawnPointsArg extends Arg{
     @Override
     protected void execute(CommandSender sender, String args[]) {
         if (sender instanceof Player) {
+            if (!sender.isOp()){
+                ((Player)sender).sendMessage(MsgManager.msg("Komenda jedynie dla administracji!"));
+                return;
+            }
             Player player = (Player) sender;
 
             List<SpawnPoint> spawnPointLists = sg.getGameManager().getSpawnManager().getSpawnPoints();

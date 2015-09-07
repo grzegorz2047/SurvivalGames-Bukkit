@@ -1,26 +1,14 @@
-Randomize chest content
 write commands for:
 - vote
 - stop
-- start
 -
 
 Extensive testing
 Make player classes?
 connect with db and?
 
-scoreboard data
-alive
-dead
-spectators
-(from neksi)
+//make dm where you have cuboid and stars effects at the egdes
 
-Random items in db
-nazwa:data:ilosc: + enchants ? + option to disable
-
-make dm where you have cuboid and stars effects at the egdes
-
-pushing spect away from players alive (neksi code)
 
 use ServerStats to follow kills, spectators, active players
 
@@ -29,4 +17,29 @@ use ServerStats to follow kills, spectators, active players
 do it
 
 /////
-Vip invisibility 30 seconds
+zabojstwo - 5 monety, exp 3
+wygrana 15 monet, exp 15
+wyjscie z gry -20 xp
+smierc exp - 10
+
+//external
+<00:43:55> "grzegorz2047": name: SurvivalGames
+<00:51:38> "dram": addPlayerPermItems
+<00:51:48> "dram": add_PlayersPermItems
+<00:52:04> "dram": refreshShopData
+<00:52:36> "dram": add_PlayerShopItem
+<00:52:57> "dram": OpenShopEvent
+<00:53:26> "dram": ShopMain.
+<00:53:40> "dram": //rank
+<00:53:43> "dram": addPlayerKill
+<00:54:22> "dram": RankMain.
+<00:54:24> "dram": addPlayerXp
+<00:54:50> "dram": gameWin
+<00:54:55> "dram": gameEscape
+<00:54:59> "dram": dead
+<00:55:41> "dram": ArenaStatus.
+<00:56:08> "dram": initStatus(max players)
+<00:56:20> "dram": setPlayers
+<00:56:52> "dram": setStatus
+<00:57:15> "dram": WAITING, STARTING, INGAME, RESTARTING, INGAME_CANJOIN
+<00:58:02> "dram": setLore

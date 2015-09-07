@@ -1,11 +1,14 @@
 package pl.grzegorz2047.survivalgames.listeners;
 
+import dram.CoinsMod.CoinsMod;
+import dram.rankmod.main.RankMain;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -32,15 +35,24 @@ public class PlayerDeathListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onDeath(final PlayerDeathEvent e) {
-        Player k = e.getEntity().getKiller();
-        if(k != null){
-            User userKiller = sg.getGameManager().getPlayers().get(k.getName());
-            userKiller.setKills(userKiller.getKills()+1);
-            ScoreboardUtil sb = new ScoreboardUtil(k, false);
-            sb.setScore(sb.getObjective(),sb.getScKills(),userKiller.getKills());
-            k.sendMessage(MsgManager.msg("Gracz "+k.getName()+" zabil gracza "+e.getEntity().getName()));
-        }
         final Player player = e.getEntity();
+        Player k = e.getEntity().getKiller();
+        if (k != null) {//If there is a killer
+            User userKiller = sg.getGameManager().getPlayers().get(k.getName());
+            userKiller.setKills(userKiller.getKills() + 1);
+            ScoreboardUtil sb = new ScoreboardUtil(k, false);
+            sb.setScore(sb.getObjective(), sb.getScKills(), userKiller.getKills());
+            k.sendMessage(MsgManager.msg("Gracz " + k.getName() + " zabil gracza " + e.getEntity().getName()));
+            CoinsMod.ChangePlayerMoneyWOMultiplier(k, sg.getGameManager().getMoneyForKills(), true);
+            if (player.getLastDamageCause().getCause().equals(EntityDamageEvent.DamageCause.PROJECTILE)) {
+                RankMain.addPlayerKill(k, RankMain.killsType.bowKill);
+            } else {
+                RankMain.addPlayerKill(k, RankMain.killsType.normalKill);
+            }
+            RankMain.addPlayerXp(k.getName(), sg.getGameManager().getExpForKills());
+        }
+        RankMain.addPlayerXp(player.getName(), sg.getGameManager().getExpForDeath());//Player who died receive minus exp
+
         sg.getGameManager().getPlayers().get(player.getName()).setSpectator(true);
         sg.getGameManager().getStats().updateStats();//update stats
         if (!sg.getServer().getPlayer(player.getName()).isOnline()) {
@@ -75,8 +87,8 @@ public class PlayerDeathListener implements Listener {
             }
         }
         int activePlayers = sg.getGameManager().getStats().getActivePlayers();
-        MsgManager.debug("Ilosc aktywnych graczy przy playerdeathevent "+activePlayers);
-        if(activePlayers == 1){
+        MsgManager.debug("Ilosc aktywnych graczy przy playerdeathevent " + activePlayers);
+        if (activePlayers == 1) {
             sg.getGameManager().end(activePlayers);
         }
     }

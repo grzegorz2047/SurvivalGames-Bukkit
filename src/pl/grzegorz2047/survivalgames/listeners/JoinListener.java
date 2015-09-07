@@ -11,6 +11,7 @@ import pl.grzegorz2047.survivalgames.SurvivalGames;
 import pl.grzegorz2047.survivalgames.scoreboard.ScoreboardUtil;
 import pl.grzegorz2047.survivalgames.user.User;
 import pl.grzegorz2047.survivalgames.utils.TimeUtil;
+import pl.neksi.craftgames.game.ArenaStatus;
 
 public class JoinListener implements Listener {
 
@@ -27,6 +28,7 @@ public class JoinListener implements Listener {
         if(joinedPlayer == null){
             return;
         }
+        ArenaStatus.setPlayers(Bukkit.getOnlinePlayers().size());
         e.setJoinMessage(null);
         User user;
         if(!sg.getGameManager().isInGame()){

@@ -1,5 +1,7 @@
 package pl.grzegorz2047.survivalgames;
 
+import dram.CoinsMod.CoinsMod;
+import dram.rankmod.main.RankMain;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -15,6 +17,7 @@ import pl.grzegorz2047.survivalgames.utils.BungeeUtil;
 import pl.grzegorz2047.survivalgames.utils.GhostUtil;
 import pl.grzegorz2047.survivalgames.utils.TimeUtil;
 import pl.grzegorz2047.survivalgames.votesystem.Vote;
+import pl.neksi.craftgames.game.ArenaStatus;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -38,6 +41,17 @@ public class GameManager {
     private boolean protection = true;
     private int protectionTime = 30;//in seconds
     private GhostUtil ghostUtil;
+
+
+    /*                                 */
+    private int moneyForKills = 5;
+    private int expForKills = 3;
+    private int moneyForWin = 15;
+    private int expForWin = 15;
+    private int expForleaving = -20;
+    private int expForDeath = -10;
+    /*                                 */
+
 
     public boolean isProtection() {
         return protection;
@@ -72,8 +86,10 @@ public class GameManager {
         this.chestManager = new ChestManager(sg);
         this.vote = new Vote(sg);
         this.minReqPlayers = this.spawnManager.getSpawnPoints().size()/2;
-        sg.setIsRestarting(false);//When plugin is restarting doesnt allow them
+        ArenaStatus.initStatus(this.spawnManager.getSpawnPoints().size());
+        sg.setIsRestarting(false);//When plugin is restarting doesnt allow them to join
         this.setGameState(GameState.WAITING);
+        ArenaStatus.setStatus(ArenaStatus.Status.WAITING);
     }
 
     Map<String, User> players = new HashMap<String, User>();
@@ -111,6 +127,29 @@ public class GameManager {
         return chestManager;
     }
 
+    public int getMoneyForKills() {
+        return moneyForKills;
+    }
+
+    public int getExpForDeath() {
+        return expForDeath;
+    }
+
+    public int getExpForKills() {
+        return expForKills;
+    }
+
+    public int getMoneyForWin() {
+        return moneyForWin;
+    }
+
+    public int getExpForWin() {
+        return expForWin;
+    }
+
+    public int getExpForleaving() {
+        return expForleaving;
+    }
 
     public enum GameState {WAITING, STARTING, INGAME, RESTARTING}
 
@@ -203,6 +242,8 @@ public class GameManager {
         } else if (activePlayers == 1) {
             Player winner = sg.getGameManager().getStats().getLastActivePlayer();
             if (winner != null) {
+                RankMain.addPlayerXp(winner.getName(),this.getExpForWin());
+                CoinsMod.ChangePlayerMoneyWOMultiplier(winner,this.getMoneyForWin(),true);
                 winner.sendMessage(MsgManager.msg("Wygrales mecz na survival games!"));
             }
             Bukkit.broadcastMessage(MsgManager.msg("Rozgrywka zostala zakonczona! Arena restartuje sie za 5 sekund!"));

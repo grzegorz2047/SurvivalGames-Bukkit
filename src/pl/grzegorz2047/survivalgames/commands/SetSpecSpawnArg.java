@@ -3,6 +3,7 @@ package pl.grzegorz2047.survivalgames.commands;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import pl.grzegorz2047.survivalgames.MsgManager;
 import pl.grzegorz2047.survivalgames.SurvivalGames;
 import pl.grzegorz2047.survivalgames.spawn.SpawnPoint;
 
@@ -20,6 +21,10 @@ public class SetSpecSpawnArg extends Arg {
     @Override
     protected void execute(CommandSender sender, String args[]) {
         if (sender instanceof Player) {
+            if (!sender.isOp()){
+                ((Player)sender).sendMessage(MsgManager.msg("Komenda jedynie dla administracji!"));
+                return;
+            }
             Player player = (Player) sender;
 
             double x = player.getLocation().getX();

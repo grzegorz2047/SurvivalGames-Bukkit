@@ -7,6 +7,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import pl.grzegorz2047.survivalgames.commands.SGCommand;
 import pl.grzegorz2047.survivalgames.listeners.*;
 import pl.grzegorz2047.survivalgames.utils.GhostUtil;
+import pl.neksi.craftgames.game.ArenaStatus;
 
 public class SurvivalGames extends JavaPlugin {
     SurvivalGames sg;
@@ -16,7 +17,7 @@ public class SurvivalGames extends JavaPlugin {
 
 
     /*                                                      */
-    public static boolean debugMode = true;
+    public static boolean debugMode = false;
     private boolean isRestarting = false;
     /*                                                      */
 
@@ -35,7 +36,9 @@ public class SurvivalGames extends JavaPlugin {
     public void onEnable() {
         this.sg = this;
         this.getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
-
+        //ShopMain.
+        //RankMain.
+        //ArenaStatus.
         this.initManagers();
         this.registerListeners();
         this.getCommands();
@@ -93,6 +96,7 @@ public class SurvivalGames extends JavaPlugin {
     }
 
     public void resetPlugin() {
+        ArenaStatus.setStatus(ArenaStatus.Status.RESTARTING);
         this.isRestarting = true;
         clearMemory();
         initManagers();
