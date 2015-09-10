@@ -17,7 +17,7 @@ public class BlockBreakListener implements Listener {
 
 
     private SurvivalGames sg;
-    Material[] materials = {Material.DOUBLE_PLANT, Material.LEAVES, Material.LEAVES_2, Material.VINE,Material.LONG_GRASS, Material.YELLOW_FLOWER, Material.RED_ROSE, Material.BROWN_MUSHROOM, Material.RED_MUSHROOM};
+    Material[] materials = {Material.MELON_BLOCK, Material.WATER_LILY, Material.MELON, Material.DOUBLE_PLANT, Material.LEAVES, Material.LEAVES_2, Material.VINE, Material.LONG_GRASS, Material.YELLOW_FLOWER, Material.RED_ROSE, Material.BROWN_MUSHROOM, Material.RED_MUSHROOM};
     private List<Material> exceptionMaterialList = new ArrayList<Material>();
 
     public BlockBreakListener(SurvivalGames sg) {
@@ -26,14 +26,15 @@ public class BlockBreakListener implements Listener {
     }
 
 
-
-
     @EventHandler
     void onBlockBreak(BlockBreakEvent e) {
-        if(sg.getGameManager().getPlayers().get(e.getPlayer().getName()).isSpectator()){
+        if (!sg.getGameManager().isInGame()) {
             e.setCancelled(true);
         }
-        if(!this.exceptionMaterialList.contains(e.getBlock().getType())){
+        if (sg.getGameManager().getPlayers().get(e.getPlayer().getName()).isSpectator()) {
+            e.setCancelled(true);
+        }
+        if (!this.exceptionMaterialList.contains(e.getBlock().getType())) {
             e.setCancelled(true);
         }
 

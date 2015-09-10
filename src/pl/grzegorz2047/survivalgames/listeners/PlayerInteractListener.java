@@ -30,6 +30,26 @@ public class PlayerInteractListener implements Listener {
     void onPlayerInteract(PlayerInteractEvent e) {
         if(sg.getGameManager().getPlayers().get(e.getPlayer().getName()).isSpectator()){
             e.setCancelled(true);
+            return;
+        }
+        if(sg.isDebugMode()){
+            if(e.getClickedBlock() != null) {
+                Block b = e.getClickedBlock();
+                //MsgManager.debug("Cos klinalem " + b.getType() + " przez " + e.getPlayer().getName());
+                Location loc = b.getLocation();
+                List<Location> chests = this.sg.getGameManager().getChestManager().getChests();
+                List<Location> doubleChests = this.sg.getGameManager().getChestManager().getDoubleChests();
+
+                if (b.getState() instanceof Chest) {
+                    //MsgManager.debug("Skrzynka!");
+                    if (!chests.contains(loc)) {
+                        chests.add(loc);
+                        sg.getGameManager().getChestManager().saveChestsLocToFile();
+                    } else {
+
+                    }
+                }
+            }
         }
         if (sg.getGameManager().getChestManager().isEditMode()){
             if(e.getClickedBlock() != null){

@@ -13,13 +13,15 @@ import java.io.IOException;
  */
 public class WorldManager {
 
+
+
     public void load(String worldName) throws IOException {
-        if(Bukkit.getOnlinePlayers().size()>0){
-            for(Player p : Bukkit.getOnlinePlayers()){
+        if (Bukkit.getOnlinePlayers().size() > 0) {
+            for (Player p : Bukkit.getOnlinePlayers()) {
                 p.kickPlayer("Blad serwera. Zglos sie do administracji serwera!");
             }
         }
-        File from = new File("Mapy"+File.separator+worldName);
+        File from = new File("/home/grzegorzServer/Mapy" + File.separator + worldName);
         MsgManager.debug("From " + from.getAbsolutePath());
 
         File to = new File(worldName);
@@ -31,7 +33,7 @@ public class WorldManager {
         FileUtils.copyDirectory(from, to);
         new File(to, "uid.dat").delete();
         new File(to, "session.lock").delete();
-        File defaultWorldFile = new File(Bukkit.getWorlds().get(0).getName()+File.separator+"playerdata"+File.separator);
+        File defaultWorldFile = new File(Bukkit.getWorlds().get(0).getName() + File.separator + "playerdata" + File.separator);
         MsgManager.debug("From " + defaultWorldFile.getAbsolutePath());
         FileUtils.deleteDirectory(defaultWorldFile);
         defaultWorldFile.mkdir();
@@ -50,14 +52,14 @@ public class WorldManager {
         world.setMonsterSpawnLimit(0);//Wylacza potwory?
         world.setStorm(false);
         world.setTime(0);
-        world.setGameRuleValue("doDaylightCycle", "false");
-        world.setWeatherDuration(20 * 60 * 20);
+        //world.setGameRuleValue("doDaylightCycle", "false");
+        world.setWeatherDuration(180 * 60 * 20);
 
         //World 0 with some changes
         World w0 = Bukkit.getWorlds().get(0);
         w0.setAutoSave(false);
 
-        for(Chunk chunk:  w0.getLoadedChunks()){
+        for (Chunk chunk : w0.getLoadedChunks()) {
             chunk.unload();
         }
     }
@@ -70,6 +72,20 @@ public class WorldManager {
             }
         }
         Bukkit.unloadWorld(Bukkit.getWorld(worldName), false);
+
+    }
+
+    public void unloadWorld() {
+
+        if (Bukkit.getOnlinePlayers().size() > 0) {
+            for (Player p : Bukkit.getOnlinePlayers()) {
+                p.kickPlayer(MsgManager.msg("Serwer restartuje sie!"));
+            }
+        }
+        if (Bukkit.getWorlds().get(1) != null) {
+            Bukkit.unloadWorld(Bukkit.getWorlds().get(1), false);
+        }
+
 
     }
    /* public String getAuthorsString(String authorColor, String color) {

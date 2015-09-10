@@ -39,4 +39,8 @@ public class CountdownSecondEvent extends Event implements Cancellable {
     public void setCancelled(boolean b) {
 
     }
+
+    public void setCurrentTime(int currentTime) {
+        this.currentTime = currentTime;
+    }
 }

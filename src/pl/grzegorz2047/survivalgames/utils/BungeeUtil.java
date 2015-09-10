@@ -12,14 +12,10 @@ import java.io.DataOutputStream;
 
 public class BungeeUtil {
 
-    public static String lobbyServer = "Lobby_survivalGames";
+    public static String lobbyServer = "LobbySG1";
 
     public static void changeServer(SurvivalGames sg, Player player, String server) {
         try {
-            if(sg.isDebugMode()){
-                player.kickPlayer(MsgManager.msg("Koniec"));
-                return;
-            }
             ByteArrayOutputStream b = new ByteArrayOutputStream();
             DataOutputStream out = new DataOutputStream(b);
             out.writeUTF("Connect");

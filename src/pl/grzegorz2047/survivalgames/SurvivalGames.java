@@ -12,9 +12,12 @@ import pl.neksi.craftgames.game.ArenaStatus;
 public class SurvivalGames extends JavaPlugin {
     SurvivalGames sg;
     GameManager gameManager;
-
+    private String worldName = "SG";
     GhostUtil ghostUtil;
 
+    public String getWorldName() {
+        return worldName;
+    }
 
     /*                                                      */
     public static boolean debugMode = false;

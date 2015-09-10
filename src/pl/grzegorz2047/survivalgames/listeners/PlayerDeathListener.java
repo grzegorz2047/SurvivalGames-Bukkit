@@ -2,6 +2,7 @@ package pl.grzegorz2047.survivalgames.listeners;
 
 import dram.CoinsMod.CoinsMod;
 import dram.rankmod.main.RankMain;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -42,7 +43,7 @@ public class PlayerDeathListener implements Listener {
             userKiller.setKills(userKiller.getKills() + 1);
             ScoreboardUtil sb = new ScoreboardUtil(k, false);
             sb.setScore(sb.getObjective(), sb.getScKills(), userKiller.getKills());
-            k.sendMessage(MsgManager.msg("Gracz " + k.getName() + " zabil gracza " + e.getEntity().getName()));
+            Bukkit.broadcastMessage(MsgManager.msg("Gracz " +ChatColor.RED+ k.getName() +ChatColor.GRAY+ " zabil gracza " + ChatColor.RED+e.getEntity().getName()));
             CoinsMod.ChangePlayerMoneyWOMultiplier(k, sg.getGameManager().getMoneyForKills(), true);
             if (player.getLastDamageCause().getCause().equals(EntityDamageEvent.DamageCause.PROJECTILE)) {
                 RankMain.addPlayerKill(k, RankMain.killsType.bowKill);
@@ -50,6 +51,8 @@ public class PlayerDeathListener implements Listener {
                 RankMain.addPlayerKill(k, RankMain.killsType.normalKill);
             }
             RankMain.addPlayerXp(k.getName(), sg.getGameManager().getExpForKills());
+        }else{
+            Bukkit.broadcastMessage(MsgManager.msg("Gracz " + e.getEntity().getName()+" zginal!"));
         }
         RankMain.addPlayerXp(player.getName(), sg.getGameManager().getExpForDeath());//Player who died receive minus exp
 
@@ -65,7 +68,8 @@ public class PlayerDeathListener implements Listener {
                 @Override
                 public void run() {
                     player.setHealth(player.getMaxHealth());
-
+                    player.getInventory().setArmorContents(null);
+                    player.getInventory().clear();
                     sg.
                             getGameManager().
                             getGhostUtil().

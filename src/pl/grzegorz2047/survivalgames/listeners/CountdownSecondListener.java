@@ -23,7 +23,7 @@ public class CountdownSecondListener implements Listener {
 
     private SurvivalGames sg;
     private ServerStats stats;
-
+    private boolean notified = false;
     public CountdownSecondListener(SurvivalGames sg) {
         this.sg = sg;
         stats = new ServerStats(sg);
@@ -41,6 +41,7 @@ public class CountdownSecondListener implements Listener {
                             p.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 20 * 30, 1));// 30 sekundowa niewidzialnosc dla vipa
                         }
                     }
+
                 }
                 sg.getGameManager().setProtectionTime(sg.getGameManager().getProtectionTime() - 1);
                 if (sg.getGameManager().getProtectionTime() <= 0) {
@@ -49,7 +50,7 @@ public class CountdownSecondListener implements Listener {
                 }
 
             }
-            if (!sg.getGameManager().isDeathMatch()) {
+            if (!sg.getGameManager().isDeathMatch()) {//Odliczanie przed dm
                 if (e.getCurrentTime() <= 5) {
                     Bukkit.broadcastMessage(MsgManager.msg("DeathMatch rozpocznie sie za " + e.getCurrentTime() + "..."));
                     for (Player p : Bukkit.getOnlinePlayers()) {
@@ -69,11 +70,22 @@ public class CountdownSecondListener implements Listener {
                         sb.setScore(sb.getObjective(), sb.getScSpect(), stats.getSpectatingPlayers());
                     }
                 }
+                if(sg.getGameManager().getStats().getActivePlayers() == 3  &&e.getCurrentTime() > 30){
+                    e.setCurrentTime(10);
+                }
 
             } else {
+
                 for (Player p : Bukkit.getOnlinePlayers()) {
                     User user = sg.getGameManager().getPlayers().get(p.getName());
                     if (!user.isSpectator()) {
+                        if(e.getCurrentTime()<30){
+                            if(!notified){
+                                notified= true;
+                                Bukkit.broadcastMessage(MsgManager.msg("Wszyscy gracze sa zmeczeni i traca punkty zdrowia!"));
+                            }
+                            p.damage(1);
+                        }
                         if (e.getCurrentTime() % 5 == 0) {
                             p.getWorld().strikeLightning(p.getLocation());//During dm strike
                         }
@@ -87,7 +99,10 @@ public class CountdownSecondListener implements Listener {
             }
 
         } else {
-            Bukkit.broadcastMessage(MsgManager.msg("Arena wystartuje za " + e.getCurrentTime() + "..."));
+            if(e.getCurrentTime() % 5 == 0){
+                Bukkit.broadcastMessage(MsgManager.msg("Arena wystartuje za " + e.getCurrentTime() + "..."));
+            }
+
             for (Player p : Bukkit.getOnlinePlayers()) {
                 ScoreboardUtil sb = new ScoreboardUtil(p, false);
                 sb.setDisplayName(TimeUtil.formatHHMMSS(e.getCurrentTime()) + sb.getMinigamePrefix() + stats.getMinMaxPlayers(false));

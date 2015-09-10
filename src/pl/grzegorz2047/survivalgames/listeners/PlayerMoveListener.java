@@ -20,7 +20,7 @@ public class PlayerMoveListener implements Listener {
     @EventHandler
     public void onMove(PlayerMoveEvent e) {
         if(sg.getGameManager().isDeathMatch() && !sg.getGameManager().getPlayers().get(e.getPlayer().getName()).isSpectator()){
-            if(sg.getGameManager().getSpawnManager().getSpectatorLoc().distance(e.getTo())>50){//Max dm distance from spawn
+            if(sg.getGameManager().getSpawnManager().getSpectatorLoc().distance(e.getTo())>sg.getGameManager().getDmPlayersMaxDistance()){//Max dm distance from spawn
                 e.setTo(e.getFrom());
                 e.getPlayer().sendMessage(MsgManager.msg("Nie mozna opuscic pola bitwy!"));
             }

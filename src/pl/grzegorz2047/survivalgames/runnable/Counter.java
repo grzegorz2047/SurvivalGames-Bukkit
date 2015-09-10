@@ -62,6 +62,7 @@ public class Counter extends BukkitRunnable {
             this.time--;
             CountdownSecondEvent secondCountEvent = new CountdownSecondEvent(time);
             Bukkit.getPluginManager().callEvent(secondCountEvent);//Fires an event and triggers CounterEndListener
+            this.time = secondCountEvent.getCurrentTime();//if any modifications
             if (time <= 0) {
                 CounterEndEvent event = new CounterEndEvent();
                 Bukkit.getPluginManager().callEvent(event);//Fires an event and triggers CounterEndListener

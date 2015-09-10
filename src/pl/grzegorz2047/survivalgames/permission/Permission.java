@@ -5,4 +5,5 @@ package pl.grzegorz2047.survivalgames.permission;
  */
 public class Permission {
     public static String PERMISSIONS_VIP = "sg.vip";
+    public static String PERMISSIONS_EKIPA = "sg.ekipa";
 }

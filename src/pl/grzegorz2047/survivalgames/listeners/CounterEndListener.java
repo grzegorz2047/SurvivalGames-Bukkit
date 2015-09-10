@@ -1,6 +1,7 @@
 package pl.grzegorz2047.survivalgames.listeners;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import pl.grzegorz2047.survivalgames.GameManager;
@@ -8,6 +9,7 @@ import pl.grzegorz2047.survivalgames.MsgManager;
 import pl.grzegorz2047.survivalgames.SurvivalGames;
 import pl.grzegorz2047.survivalgames.events.CounterEndEvent;
 import pl.grzegorz2047.survivalgames.runnable.Counter;
+import pl.neksi.craftgames.game.ArenaStatus;
 
 /**
  * Created by Grzegorz2047. 28.08.2015.
@@ -30,7 +32,9 @@ public class CounterEndListener implements Listener {
             g.setGameState(GameManager.GameState.INGAME);
             Counter counter = new Counter(sg, g.getMainTime());
             counter.start();
+            ArenaStatus.setStatus(ArenaStatus.Status.INGAME);
             Bukkit.broadcastMessage(MsgManager.msg("Zostala wlaczona ochrona przed graczami na 30 sekund!"));
+            Bukkit.broadcastMessage(MsgManager.msg(ChatColor.GREEN+"Niewidzialnosc zostala wlaczona dla rangi VIP!"));
         } else if (g.isInGame()) {
             if (g.isDeathMatch()) {//If there was a deathmatch
                 g.end(g.getStats().getActivePlayers());//end this

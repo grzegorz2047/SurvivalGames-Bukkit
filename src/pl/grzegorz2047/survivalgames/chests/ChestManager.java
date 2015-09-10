@@ -9,6 +9,7 @@ import pl.grzegorz2047.survivalgames.MsgManager;
 import pl.grzegorz2047.survivalgames.SurvivalGames;
 import pl.grzegorz2047.survivalgames.files.YmlFileHandler;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -18,7 +19,7 @@ import java.util.Random;
  */
 public class ChestManager {
 
-    private int amountOfItemsInChest = 10;
+    private int amountOfItemsInChest = 6;
     private boolean editMode = false;
     private SurvivalGames sg;
     YmlFileHandler chestFileHandler;
@@ -31,10 +32,10 @@ public class ChestManager {
 
     public ChestManager(SurvivalGames sg) {
         this.sg = sg;
-        chestFileHandler = new YmlFileHandler(sg, sg.getDataFolder().getAbsolutePath(), "ChestSpawns");
+        chestFileHandler = new YmlFileHandler(sg, "/home/grzegorzServer/Mapy/Mapy_SG/"+File.separator+sg.getWorldName(), "ChestSpawns");
         chestFileHandler.load();
 
-        chestItemsFileHandler = new YmlFileHandler(sg, sg.getDataFolder().getAbsolutePath(), "ChestItems");
+        chestItemsFileHandler = new YmlFileHandler(sg,"/home/grzegorzServer/Config"+ File.separator, "ChestItems");
         chestItemsFileHandler.load();
         this.loadChestsConfig();
         this.loadRandomItems();

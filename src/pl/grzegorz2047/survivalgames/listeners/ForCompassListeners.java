@@ -26,18 +26,18 @@ public class ForCompassListeners implements Listener {
 
     public IconMenuUtil initCompass() {
         int size = 9;
-        int arenaPlayer = Bukkit.getOnlinePlayers().size() - GhostUtil.ghosts.size();
+        int arenaPlayer = sg.getGameManager().getStats().getActivePlayers();
 
         if (arenaPlayer > 27) {
             size = 54;
         }
-        if (arenaPlayer <= 27) {
+        if (arenaPlayer < 27) {
             size = 27;
         }
-        if (arenaPlayer <= 18) {
+        if (arenaPlayer < 18) {
             size = 18;
         }
-        if (arenaPlayer <= 9) {
+        if (arenaPlayer < 9) {
             size = 9;
         }
 

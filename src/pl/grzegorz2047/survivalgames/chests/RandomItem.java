@@ -13,7 +13,7 @@ public class RandomItem {
     private Enchantment ench;
     private byte abyte = 0;
     private int amount;
-    private int level;
+    private int level = 1;
 
 
     public RandomItem(String data) {

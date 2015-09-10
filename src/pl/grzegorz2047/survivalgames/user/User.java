@@ -1,7 +1,10 @@
 package pl.grzegorz2047.survivalgames.user;
 
+import org.apache.commons.lang.Validate;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+
+import java.util.logging.Level;
 
 /**
  * Created by Grzegorz2047. 28.08.2015.
@@ -14,6 +17,10 @@ public class User {
     private int money, kills, deaths, wins = 0;//?
 
     public User(String username, boolean spectator) {
+        Validate.notNull(username);
+        if(username == null){
+            Bukkit.getLogger().log(Level.WARNING,"Username null");
+        }
         this.username = username;
         this.spectator = spectator;
         if (!spectator) {

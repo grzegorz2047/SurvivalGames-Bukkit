@@ -22,6 +22,11 @@ public class PlayerLoginListener implements Listener {
 
     @EventHandler
     void onPlayerLogin(PlayerLoginEvent e) {
+        if(sg.isDebugMode()){
+            if(!e.getPlayer().getName().equals("grzegorz2047")){
+                e.disallow(PlayerLoginEvent.Result.KICK_OTHER, MsgManager.msg(ChatColor.RED + "Przerwa techniczna!"));
+            }
+        }
         if (sg.getGameManager().isInGame()) {
             if (!(e.getPlayer().hasPermission(Permission.PERMISSIONS_VIP) || e.getPlayer().isOp()) && !sg.isDebugMode()) {
                 e.disallow(PlayerLoginEvent.Result.KICK_OTHER, MsgManager.msg(ChatColor.RED + "Nie mozesz obserwowac bez rangi VIP!"));
@@ -31,7 +36,7 @@ public class PlayerLoginListener implements Listener {
 
             if (spawnSize == spawnSize - 4) {//IF 4 slots left then let join only VIP
                 if (!e.getPlayer().hasPermission(Permission.PERMISSIONS_VIP)) {
-                    e.disallow(PlayerLoginEvent.Result.KICK_OTHER, MsgManager.msg(ChatColor.RED + "Arena zarezerwowana dla rangi VIP!"));
+                    e.disallow(PlayerLoginEvent.Result.KICK_OTHER, MsgManager.msg(ChatColor.RED + "Sloty zarezerwowane dla rangi VIP!"));
                 }
             }
 

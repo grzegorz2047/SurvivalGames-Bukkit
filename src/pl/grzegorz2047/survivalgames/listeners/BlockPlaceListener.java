@@ -18,7 +18,10 @@ public class BlockPlaceListener implements Listener {
 
     @EventHandler
     void onBlockPlace(BlockPlaceEvent e) {
-        e.setCancelled(true);
+        if(!sg.getGameManager().getChestManager().isEditMode()){
+            e.setCancelled(true);
+        }
+
     }
 
 }

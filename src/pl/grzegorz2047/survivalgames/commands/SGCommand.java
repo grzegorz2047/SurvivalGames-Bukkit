@@ -23,6 +23,7 @@ public class SGCommand implements CommandExecutor {
         this.commands.put("setspecspawn", new SetSpecSpawnArg(sg));
         this.commands.put("mem", new MemArg(sg));
         this.commands.put("editmode", new EditModeArg(sg));
+        this.commands.put("leave", new LeaveArg(sg));
     }
 
     private final Map<String, Arg> commands = new HashMap<String, Arg>();

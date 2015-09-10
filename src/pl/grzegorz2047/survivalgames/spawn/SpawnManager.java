@@ -7,6 +7,7 @@ import pl.grzegorz2047.survivalgames.SurvivalGames;
 import pl.grzegorz2047.survivalgames.files.YmlFileHandler;
 import pl.grzegorz2047.survivalgames.user.User;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,8 +23,14 @@ public class SpawnManager {
     private SurvivalGames sg;
 
     public SpawnManager(SurvivalGames sg) {
-        this.sg = sg;
-        spawnfileHandler = new YmlFileHandler(sg, sg.getDataFolder().getAbsolutePath(), "Spawns");
+        this.sg = sg;//sg.getDataFolder().getAbsolutePath()
+        spawnfileHandler
+                = new YmlFileHandler
+                (sg,
+                        "/home/grzegorzServer/Mapy/Mapy_SG/"+
+                                sg.getWorldName()+
+                                File.separator,
+                        "Spawns");
         spawnfileHandler.load();
         this.loadSpawnFromFile(spawnfileHandler);
         this.loadSpecLocFromFile(spawnfileHandler);
@@ -77,7 +84,7 @@ public class SpawnManager {
         SpawnPoint sp = this.getPlayerSpawnPoint(user.getUsername());
         if (sp != null) {
             user.getPlayer().teleport(sp.getLocation());
-            sp.setFree(true, null);
+            sp.setFree(true, "");
         }
     }
 

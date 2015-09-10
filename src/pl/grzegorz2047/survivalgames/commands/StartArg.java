@@ -5,6 +5,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import pl.grzegorz2047.survivalgames.MsgManager;
 import pl.grzegorz2047.survivalgames.SurvivalGames;
+import pl.grzegorz2047.survivalgames.permission.Permission;
 
 /**
  * Created by Grzegorz2047. 28.08.2015.
@@ -19,7 +20,7 @@ public class StartArg extends Arg {
 
     @Override
     protected void execute(CommandSender sender, String args[]) {
-        if (!sender.isOp()){
+        if (!sender.isOp() && !sender.hasPermission(Permission.PERMISSIONS_EKIPA)){
             ((Player)sender).sendMessage(MsgManager.msg("Komenda jedynie dla administracji!"));
             return;
         }

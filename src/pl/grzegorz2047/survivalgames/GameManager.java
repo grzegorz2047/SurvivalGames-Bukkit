@@ -36,12 +36,21 @@ public class GameManager {
     ServerStats stats;
     private int minReqPlayers;//(active/2);
 
-    private int mainTime = 3 * 60;//in seconds
+    public int getDmPlayersMaxDistance() {
+        return dmPlayersMaxDistance;
+    }
+
+    private int dmPlayersMaxDistance = 50;
+    private int mainTime = 10 * 60;//in seconds
     private int dmTime = 3 * 60;
     private boolean protection = true;
     private int protectionTime = 30;//in seconds
     private GhostUtil ghostUtil;
+    private String worldName;
 
+    public String getWorldName() {
+        return worldName;
+    }
 
     /*                                 */
     private int moneyForKills = 5;
@@ -71,10 +80,11 @@ public class GameManager {
 
     public GameManager(SurvivalGames sg) {
         this.setGameState(GameState.RESTARTING);
-        String worldName = "MapaSG";
+        this.worldName = sg.getWorldName();
+        this.worldName = "SG1";
         this.stats = new ServerStats(sg);
         this.wm = new WorldManager();
-        this.wm.unloadWorld(worldName);
+        this.wm.unloadWorld();
         this.ghostUtil = new GhostUtil(sg);
         try {
             this.wm.load(worldName);
@@ -87,6 +97,7 @@ public class GameManager {
         this.vote = new Vote(sg);
         this.minReqPlayers = this.spawnManager.getSpawnPoints().size()/2;
         ArenaStatus.initStatus(this.spawnManager.getSpawnPoints().size());
+        ArenaStatus.setLore(ChatColor.GOLD + "Beta testy");
         sg.setIsRestarting(false);//When plugin is restarting doesnt allow them to join
         this.setGameState(GameState.WAITING);
         ArenaStatus.setStatus(ArenaStatus.Status.WAITING);
@@ -169,7 +180,7 @@ public class GameManager {
 
     public boolean startGame() {
         if (this.getGameState().equals(GameState.WAITING)) {
-            Counter counter = new Counter(sg, 20);//Start counting down to start
+            Counter counter = new Counter(sg, 30);//Start counting down to start
             counter.start();
             this.setGameState(GameManager.GameState.STARTING);
             return true;
@@ -190,18 +201,27 @@ public class GameManager {
         for (SpawnPoint sp : this.spawnManager.getSpawnPoints()) {
             User user = this.getPlayers().get(sp.getOccupiedBy());
             if (user != null) {
+                if(user.getPlayer() == null){
+                    //MsgManager.debug("Player null!");
+                    user.setSpectator(true);
+                    continue;
+                }
+                MsgManager.debug("Gracz "+user.getUsername()+" na serwerze");
                 if (!user.isSpectator()) {
+                    MsgManager.debug("Gracz "+user.getUsername()+" nie jest Spectatorem!");
                     user.heal();
                     user.getPlayer().teleport(sp.getLocation());
                 }
             }
         }
         sg.getGameManager().getChestManager().fillChests();
+        Bukkit.broadcastMessage(MsgManager.msg("Skrzynki zostaly uzupelnione!"));
         this.deathMatch = true;
         return true;
     }
 
     public boolean isInGame() {
+       // MsgManager.debug("IS IN GAME!");
         return state.equals(GameState.INGAME);
     }
 
@@ -224,16 +244,19 @@ public class GameManager {
 
     public void removePlayer(Player p) {
         User user = this.players.get(p.getName());
-        if(user.hasPlayedBefore()){
+        if(user.hasPlayedBefore() && !sg.getGameManager().isInGame()){
             this.getSpawnManager().displacePlayer(user);
         }
 
         this.players.remove(p.getName());
         sg.getGameManager().getGhostUtil().removePlayer(p);
     }
-
+    private boolean end= false;
     public void end(int activePlayers) {
-
+        if(end){
+            return;
+        }
+        end = true;
         if (activePlayers > 1) {
             Bukkit.broadcastMessage(
                     MsgManager.msg(
@@ -254,10 +277,16 @@ public class GameManager {
                 for (Player p : Bukkit.getOnlinePlayers()) {
                     BungeeUtil.changeServer(sg, p, BungeeUtil.lobbyServer);
                 }
-                sg.resetPlugin();
+                sg.setIsRestarting(true);
             }
         }, 5 * 20l);
+        Bukkit.getScheduler().runTaskLater(sg, new Runnable() {
+            @Override
+            public void run() {
 
+                sg.resetPlugin();
+            }
+        }, 7 * 20l);
     }
 
 
