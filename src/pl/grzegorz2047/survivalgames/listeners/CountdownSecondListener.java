@@ -29,7 +29,7 @@ public class CountdownSecondListener implements Listener {
         stats = new ServerStats(sg);
     }
 
-
+    private boolean refill = false;
     @EventHandler
     void onEverySecond(CountdownSecondEvent e) {
         this.stats.updateStats();
@@ -50,7 +50,13 @@ public class CountdownSecondListener implements Listener {
                 }
 
             }
+
             if (!sg.getGameManager().isDeathMatch()) {//Odliczanie przed dm
+                if(e.getCurrentTime() <= 60*5 && !refill){
+                    refill = true;
+                    sg.getGameManager().getChestManager().fillChests();
+                    Bukkit.broadcastMessage(MsgManager.msg("Skrzynki zostaly uzupelnione!"));
+                }
                 if (e.getCurrentTime() <= 5) {
                     Bukkit.broadcastMessage(MsgManager.msg("DeathMatch rozpocznie sie za " + e.getCurrentTime() + "..."));
                     for (Player p : Bukkit.getOnlinePlayers()) {

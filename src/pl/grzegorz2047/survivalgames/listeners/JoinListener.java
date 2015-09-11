@@ -29,7 +29,7 @@ public class JoinListener implements Listener {
         if (joinedPlayer == null) {
             return;
         }
-
+        //joinedPlayer.teleport(Bukkit.getWorlds().get(1).getSpawnLocation());
         e.setJoinMessage(null);
         User user;
         if (!sg.getGameManager().isInGame()) {

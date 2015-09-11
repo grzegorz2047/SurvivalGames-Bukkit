@@ -21,10 +21,10 @@ public class PlayerTeleportTrackingListeners implements Listener {
     void onTp(PlayerTeleportEvent e){
         if(sg.getGameManager().isDeathMatch()){
             if(e.getCause().equals(PlayerTeleportEvent.TeleportCause.ENDER_PEARL)){
-                if(sg.getGameManager().getSpawnManager().getSpectatorLoc().distance(e.getTo()) > sg.getGameManager().getDmPlayersMaxDistance()){
-                    e.getPlayer().sendMessage(MsgManager.msg("Nie mozna teleportowac sie poza obszar death matchu!"));
+                //if(sg.getGameManager().getSpawnManager().getSpectatorLoc().distance(e.getTo()) > sg.getGameManager().getDmPlayersMaxDistance()){
+                    e.getPlayer().sendMessage(MsgManager.msg("Nie mozna teleportowac na death matchu!"));
                     e.setCancelled(true);
-                }
+                //}
 
             }
         }

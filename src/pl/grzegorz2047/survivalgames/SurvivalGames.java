@@ -20,7 +20,7 @@ public class SurvivalGames extends JavaPlugin {
     }
 
     /*                                                      */
-    public static boolean debugMode = false;
+    public static boolean debugMode = true;
     private boolean isRestarting = false;
     /*                                                      */
 
@@ -106,4 +106,7 @@ public class SurvivalGames extends JavaPlugin {
     }
 
 
+    public void setWorldName(String worldName) {
+        this.worldName = worldName;
+    }
 }

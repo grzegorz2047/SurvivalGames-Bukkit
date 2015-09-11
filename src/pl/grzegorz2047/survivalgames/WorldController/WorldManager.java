@@ -13,7 +13,7 @@ import java.io.IOException;
  */
 public class WorldManager {
 
-
+private String defaultToMapName ="MapaSG";
 
     public void load(String worldName) throws IOException {
         if (Bukkit.getOnlinePlayers().size() > 0) {
@@ -21,10 +21,10 @@ public class WorldManager {
                 p.kickPlayer("Blad serwera. Zglos sie do administracji serwera!");
             }
         }
-        File from = new File("/home/grzegorzServer/Mapy" + File.separator + worldName);
+        File from = new File("/home/grzegorzServer/Mapy/Mapy_SG" + File.separator + worldName);
         MsgManager.debug("From " + from.getAbsolutePath());
 
-        File to = new File(worldName);
+        File to = new File(defaultToMapName);
 
         if (to.exists()) {
             to.delete();
@@ -38,7 +38,7 @@ public class WorldManager {
         FileUtils.deleteDirectory(defaultWorldFile);
         defaultWorldFile.mkdir();
 
-        WorldCreator creator = new WorldCreator(worldName);
+        WorldCreator creator = new WorldCreator(defaultToMapName);
         creator.environment(World.Environment.NORMAL);
         creator.generateStructures(false);
         creator.generator(new AirGenerator());
@@ -82,7 +82,7 @@ public class WorldManager {
                 p.kickPlayer(MsgManager.msg("Serwer restartuje sie!"));
             }
         }
-        if (Bukkit.getWorlds().get(1) != null) {
+        if (Bukkit.getWorlds().size() >1) {
             Bukkit.unloadWorld(Bukkit.getWorlds().get(1), false);
         }
 

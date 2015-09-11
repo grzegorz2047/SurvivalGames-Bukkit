@@ -84,7 +84,15 @@ public class ChestManager {
     }
 
     public void fillChests() {
+        List<Location> locToRemove = new ArrayList<Location>();
         for (Location loc : this.chests) {
+            if(sg.isDebugMode()){
+                if(loc == null){
+                    locToRemove.add(loc);
+                    System.out.println("Niepoprawna loc skrzynki!");
+                }
+            }
+
             Block b = loc.getBlock();
             int amount = r.nextInt(amountOfItemsInChest) + 2;
             if (b.getState() instanceof Chest) {
@@ -106,6 +114,12 @@ public class ChestManager {
 
             }
         }
+        if(sg.isDebugMode()){
+            for(Location loc : locToRemove){
+                this.chests.remove(loc);
+            }
+        }
+
     }
 
     public boolean isEditMode() {

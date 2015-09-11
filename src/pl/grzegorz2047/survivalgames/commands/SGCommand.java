@@ -19,7 +19,7 @@ public class SGCommand implements CommandExecutor {
         this.commands.put("vote", new VoteArg(sg));
         this.commands.put("setspawnpoint", new SetSpawnPointArg(sg));
         this.commands.put("savespawnpoints", new SaveSpawnPointsArg(sg));
-        this.commands.put("clearSpawnPoints", new ClearSpawnPointsArg(sg));
+        this.commands.put("clearspawnpoints", new ClearSpawnPointsArg(sg));
         this.commands.put("setspecspawn", new SetSpecSpawnArg(sg));
         this.commands.put("mem", new MemArg(sg));
         this.commands.put("editmode", new EditModeArg(sg));

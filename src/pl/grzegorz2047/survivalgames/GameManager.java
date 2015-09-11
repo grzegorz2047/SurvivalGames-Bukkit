@@ -15,13 +15,13 @@ import pl.grzegorz2047.survivalgames.stats.ServerStats;
 import pl.grzegorz2047.survivalgames.user.User;
 import pl.grzegorz2047.survivalgames.utils.BungeeUtil;
 import pl.grzegorz2047.survivalgames.utils.GhostUtil;
+import pl.grzegorz2047.survivalgames.utils.NearestPlayerCompassUtil;
 import pl.grzegorz2047.survivalgames.utils.TimeUtil;
 import pl.grzegorz2047.survivalgames.votesystem.Vote;
 import pl.neksi.craftgames.game.ArenaStatus;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by Grzegorz2047. 28.08.2015.
@@ -46,6 +46,7 @@ public class GameManager {
     private boolean protection = true;
     private int protectionTime = 30;//in seconds
     private GhostUtil ghostUtil;
+    private NearestPlayerCompassUtil compassUtil;
     private String worldName;
 
     public String getWorldName() {
@@ -78,10 +79,13 @@ public class GameManager {
         this.protectionTime = protectionTime;
     }
 
+    private Random r = new Random();
+
     public GameManager(SurvivalGames sg) {
         this.setGameState(GameState.RESTARTING);
+        int randomNumber = r.nextInt(13)+1;
+        sg.setWorldName("SG"+randomNumber);
         this.worldName = sg.getWorldName();
-        this.worldName = "SG1";
         this.stats = new ServerStats(sg);
         this.wm = new WorldManager();
         this.wm.unloadWorld();
@@ -94,6 +98,7 @@ public class GameManager {
         this.sg = sg;
         this.spawnManager = new SpawnManager(sg);
         this.chestManager = new ChestManager(sg);
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(sg,new NearestPlayerCompassUtil(sg),0,5*20);
         this.vote = new Vote(sg);
         this.minReqPlayers = this.spawnManager.getSpawnPoints().size()/2;
         ArenaStatus.initStatus(this.spawnManager.getSpawnPoints().size());
@@ -310,6 +315,16 @@ public class GameManager {
             }
             sg.getGameManager().setGameState(GameState.WAITING);
         }
+    }
+
+    public List<User> getActivePlayers(){
+        List<User> users = new ArrayList<User>();
+        for (User u : sg.getGameManager().getPlayers().values()) {
+            if (!u.isSpectator()) {
+                users.add(u);
+            }
+        }
+        return users;
     }
 
 

@@ -3,14 +3,12 @@ package pl.grzegorz2047.survivalgames;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 
-import java.util.logging.Level;
-
 /**
  * Created by Grzegorz2047. 30.08.2015.
  */
 public class MsgManager {
 
-    private static String prefix = ChatColor.translateAlternateColorCodes('&', "[&7&cSG&7] ");
+    private static String prefix = ChatColor.translateAlternateColorCodes('&', "&7[&cSG&7] ");
 
     public static String msg(String msg) {
         String message = prefix + msg;
