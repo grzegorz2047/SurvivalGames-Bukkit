@@ -309,6 +309,7 @@ public class GameManager {
         if (active <= this.minReqPlayers) {
             Bukkit.getScheduler().cancelTasks(sg);
             this.getGhostUtil().createTask(sg);//Restart task
+            Bukkit.getScheduler().scheduleSyncRepeatingTask(sg, new NearestPlayerCompassUtil(sg), 0, 5 * 20);
             for (Player p : Bukkit.getOnlinePlayers()) {
                 ScoreboardUtil sb = new ScoreboardUtil(p, false);
                 sb.setDisplayName(TimeUtil.formatHHMMSS(0) + sb.getMinigamePrefix() + stats.getMinMaxPlayers(false));
@@ -324,6 +325,7 @@ public class GameManager {
                 users.add(u);
             }
         }
+        //System.out.println("Size active players: "+users.size());
         return users;
     }
 

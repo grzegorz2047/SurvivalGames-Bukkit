@@ -20,7 +20,7 @@ public class SurvivalGames extends JavaPlugin {
     }
 
     /*                                                      */
-    public static boolean debugMode = true;
+    public static boolean debugMode = false;
     private boolean isRestarting = false;
     /*                                                      */
 
@@ -99,6 +99,7 @@ public class SurvivalGames extends JavaPlugin {
     }
 
     public void resetPlugin() {
+        sg.getGameManager().getChestManager().saveChestsLocToFile();//Temporary save chest config
         ArenaStatus.setStatus(ArenaStatus.Status.RESTARTING);
         this.isRestarting = true;
         clearMemory();

@@ -2,8 +2,11 @@ package pl.grzegorz2047.survivalgames.listeners;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.inventory.ItemStack;
 import pl.grzegorz2047.survivalgames.GameManager;
 import pl.grzegorz2047.survivalgames.MsgManager;
 import pl.grzegorz2047.survivalgames.SurvivalGames;
@@ -35,6 +38,9 @@ public class CounterEndListener implements Listener {
             ArenaStatus.setStatus(ArenaStatus.Status.INGAME);
             Bukkit.broadcastMessage(MsgManager.msg("Zostala wlaczona ochrona przed graczami na 30 sekund!"));
             Bukkit.broadcastMessage(MsgManager.msg(ChatColor.GREEN+"Niewidzialnosc zostala wlaczona dla rangi VIP!"));
+            for(Player p : Bukkit.getOnlinePlayers()){
+                p.getInventory().addItem(new ItemStack(Material.COMPASS,1));
+            }
         } else if (g.isInGame()) {
             if (g.isDeathMatch()) {//If there was a deathmatch
                 g.end(g.getStats().getActivePlayers());//end this

@@ -24,12 +24,14 @@ public class CountdownSecondListener implements Listener {
     private SurvivalGames sg;
     private ServerStats stats;
     private boolean notified = false;
+
     public CountdownSecondListener(SurvivalGames sg) {
         this.sg = sg;
         stats = new ServerStats(sg);
     }
 
     private boolean refill = false;
+
     @EventHandler
     void onEverySecond(CountdownSecondEvent e) {
         this.stats.updateStats();
@@ -52,7 +54,7 @@ public class CountdownSecondListener implements Listener {
             }
 
             if (!sg.getGameManager().isDeathMatch()) {//Odliczanie przed dm
-                if(e.getCurrentTime() <= 60*5 && !refill){
+                if (e.getCurrentTime() <= 60 * 5 && !refill) {
                     refill = true;
                     sg.getGameManager().getChestManager().fillChests();
                     Bukkit.broadcastMessage(MsgManager.msg("Skrzynki zostaly uzupelnione!"));
@@ -76,7 +78,7 @@ public class CountdownSecondListener implements Listener {
                         sb.setScore(sb.getObjective(), sb.getScSpect(), stats.getSpectatingPlayers());
                     }
                 }
-                if(sg.getGameManager().getStats().getActivePlayers() == 3  &&e.getCurrentTime() > 30){
+                if (sg.getGameManager().getStats().getActivePlayers() == 3 && e.getCurrentTime() > 30) {
                     e.setCurrentTime(10);
                 }
 
@@ -85,9 +87,9 @@ public class CountdownSecondListener implements Listener {
                 for (Player p : Bukkit.getOnlinePlayers()) {
                     User user = sg.getGameManager().getPlayers().get(p.getName());
                     if (!user.isSpectator()) {
-                        if(e.getCurrentTime()<30){
-                            if(!notified){
-                                notified= true;
+                        if (e.getCurrentTime() < 30) {
+                            if (!notified) {
+                                notified = true;
                                 Bukkit.broadcastMessage(MsgManager.msg("Wszyscy gracze sa zmeczeni i traca punkty zdrowia!"));
                             }
                             p.damage(1);
@@ -105,7 +107,7 @@ public class CountdownSecondListener implements Listener {
             }
 
         } else {
-            if(e.getCurrentTime() % 5 == 0){
+            if (e.getCurrentTime() % 5 == 0) {
                 Bukkit.broadcastMessage(MsgManager.msg("Arena wystartuje za " + e.getCurrentTime() + "..."));
             }
 

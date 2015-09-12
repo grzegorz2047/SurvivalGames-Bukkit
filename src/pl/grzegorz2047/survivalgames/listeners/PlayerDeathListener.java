@@ -74,11 +74,12 @@ public class PlayerDeathListener implements Listener {
                             getGameManager().
                             getGhostUtil().
                             addPlayer(player);
+                    player.sendMessage(MsgManager.msg("Aby opuscic rozgrywke wpisz /sg leave"));
                 }
             }.runTaskLater(sg, 1L);
 
         } else {
-            player.sendMessage(MsgManager.msg(ChatColor.GREEN + "Chcesz ogladac arene? Zakup range VIP!"));
+            player.sendMessage(MsgManager.msg("Chcesz ogladac arene? Zakup range VIP w http://www.craftgames.pl/sklep"));
             BungeeUtil.changeServer(sg, player, BungeeUtil.lobbyServer);
 
         }

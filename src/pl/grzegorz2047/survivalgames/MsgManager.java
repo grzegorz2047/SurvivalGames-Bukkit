@@ -11,7 +11,7 @@ public class MsgManager {
     private static String prefix = ChatColor.translateAlternateColorCodes('&', "&7[&cSG&7] ");
 
     public static String msg(String msg) {
-        String message = prefix + msg;
+        String message = prefix + ChatColor.translateAlternateColorCodes('&',msg);
 
         return message;
     }

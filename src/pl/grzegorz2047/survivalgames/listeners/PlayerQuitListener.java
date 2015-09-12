@@ -3,7 +3,6 @@ package pl.grzegorz2047.survivalgames.listeners;
 
 import dram.rankmod.main.RankMain;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -35,7 +34,7 @@ public class PlayerQuitListener implements Listener {
         if (sg.getGameManager().isInGame()) {
             if (!sg.getGameManager().getPlayers().get(p.getName()).isSpectator()) {
                 RankMain.addPlayerXp(p.getName(), sg.getGameManager().getExpForleaving());
-                p.sendMessage(MsgManager.msg(ChatColor.RED + "Otrzymales ujemne punkty exp za opuszczenie rozgrywki! (" + sg.getGameManager().getExpForleaving() + ")"));
+                p.sendMessage(MsgManager.msg("Otrzymales ujemne punkty exp za opuszczenie rozgrywki! (" + sg.getGameManager().getExpForleaving() + ")"));
             }
         }
         sg.

@@ -1,6 +1,5 @@
 package pl.grzegorz2047.survivalgames.listeners;
 
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.block.Chest;
@@ -51,7 +50,7 @@ public class PlayerInteractListener implements Listener {
                 }
             }
         }
-        if (sg.getGameManager().getChestManager().isEditMode()){
+        if (sg.getGameManager().getChestManager().isEditMode() || true){//Add missing chests
             if(e.getClickedBlock() != null){
                 Block b = e.getClickedBlock();
                 MsgManager.debug("Cos klinalem "+b.getType()+" przez "+e.getPlayer().getName());
@@ -63,17 +62,17 @@ public class PlayerInteractListener implements Listener {
                     MsgManager.debug("Skrzynka!");
                     if(!chests.contains(loc)){
                         chests.add(loc);
-                        e.getPlayer().sendMessage(MsgManager.msg(ChatColor.GREEN + "Skrzynka zostala dodana!"));
+                        //e.getPlayer().sendMessage(MsgManager.msg(ChatColor.GREEN + "Skrzynka zostala dodana!"));
                     }else{
-                        e.getPlayer().sendMessage(MsgManager.msg(ChatColor.RED+"Ta skrzynka zostala juz dodana!"));
+                        //e.getPlayer().sendMessage(MsgManager.msg(ChatColor.RED+"Ta skrzynka zostala juz dodana!"));
                     }
                 }else if(b.getState() instanceof DoubleChest){
-                    MsgManager.debug("double Skrzynka!");
+                    //MsgManager.debug("double Skrzynka!");
                     if(!doubleChests.contains(loc)){
                         doubleChests.add(loc);
-                        e.getPlayer().sendMessage(MsgManager.msg(ChatColor.GREEN + "Skrzynka zostala dodana!"));
+                        //e.getPlayer().sendMessage(MsgManager.msg(ChatColor.GREEN + "Skrzynka zostala dodana!"));
                     }else{
-                        e.getPlayer().sendMessage(MsgManager.msg(ChatColor.RED+"Ta skrzynka zostala juz dodana!"));
+                       // e.getPlayer().sendMessage(MsgManager.msg(ChatColor.RED+"Ta skrzynka zostala juz dodana!"));
                     }
                 }
             }

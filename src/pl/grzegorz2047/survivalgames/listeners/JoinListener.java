@@ -36,9 +36,9 @@ public class JoinListener implements Listener {
             Bukkit.broadcastMessage(MsgManager.msg(joinedPlayer.getName() + " dolaczyl do areny jako " + sg.getGameManager().getStats().getMinMaxPlayers(true)));
             user = sg.getGameManager().addPlayer(joinedPlayer, false);
             sg.getGameManager().checkRequirementToStart();
-            joinedPlayer.sendMessage(MsgManager.msg(ChatColor.BOLD + "" + ChatColor.AQUA + "Witaj na arenie z klasyczna wersja Survival Games w wersji BETA!"));
-            joinedPlayer.sendMessage(MsgManager.msg(ChatColor.BOLD + "" + ChatColor.RED + "Za wyjscie z gry podczas rozgrywki otrzymuje sie ujemne punkty EXP"));
-            joinedPlayer.sendMessage(MsgManager.msg(ChatColor.BOLD + "" + ChatColor.AQUA + "Jezeli 2 osoby przezyja deathmatch to otrzymuja ujemne punkty EXP!"));
+            joinedPlayer.sendMessage(MsgManager.msg("Witaj na arenie z klasyczna wersja Survival Games w wersji BETA!"));
+            joinedPlayer.sendMessage(MsgManager.msg("Za wyjscie z gry podczas rozgrywki otrzymuje sie ujemne punkty EXP"));
+            joinedPlayer.sendMessage(MsgManager.msg("Jezeli 2 osoby przezyja deathmatch to otrzymuja ujemne punkty EXP!"));
             ScoreboardUtil sc;
             for (Player player : Bukkit.getOnlinePlayers()) {
                 sc = new ScoreboardUtil(player, false);
