@@ -38,12 +38,13 @@ public class PlayerDeathListener implements Listener {
     public void onDeath(final PlayerDeathEvent e) {
         final Player player = e.getEntity();
         Player k = e.getEntity().getKiller();
-        if (k != null) {//If there is a killer
+        if (k != null && !k.equals(player)) {//If there is a killer
+
             User userKiller = sg.getGameManager().getPlayers().get(k.getName());
             userKiller.setKills(userKiller.getKills() + 1);
             ScoreboardUtil sb = new ScoreboardUtil(k, false);
             sb.setScore(sb.getObjective(), sb.getScKills(), userKiller.getKills());
-            Bukkit.broadcastMessage(MsgManager.msg("Gracz " +ChatColor.RED+ k.getName() +ChatColor.GRAY+ " zabil gracza " + ChatColor.RED+e.getEntity().getName()));
+            Bukkit.broadcastMessage(MsgManager.msg("Gracz " + ChatColor.RED + k.getName() + ChatColor.GRAY + " zabil gracza " + ChatColor.RED + e.getEntity().getName()));
             CoinsMod.ChangePlayerMoneyWOMultiplier(k, sg.getGameManager().getMoneyForKills(), true);
             if (player.getLastDamageCause().getCause().equals(EntityDamageEvent.DamageCause.PROJECTILE)) {
                 RankMain.addPlayerKill(k, RankMain.killsType.bowKill);
@@ -51,11 +52,11 @@ public class PlayerDeathListener implements Listener {
                 RankMain.addPlayerKill(k, RankMain.killsType.normalKill);
             }
             RankMain.addPlayerXp(k.getName(), sg.getGameManager().getExpForKills());
-        }else{
-            Bukkit.broadcastMessage(MsgManager.msg("Gracz " + e.getEntity().getName()+" zginal!"));
+        } else {
+            Bukkit.broadcastMessage(MsgManager.msg("Gracz " + e.getEntity().getName() + " zginal!"));
         }
-        RankMain.addPlayerXp(player.getName(), sg.getGameManager().getExpForDeath());//Player who died receive minus exp
-
+        //RankMain.addPlayerXp(player.getName(), sg.getGameManager().getExpForDeath());//Player who died receive minus exp
+        RankMain.addPlayerXp(player, RankMain.xpKeys.dead);
         sg.getGameManager().getPlayers().get(player.getName()).setSpectator(true);
         sg.getGameManager().getStats().updateStats();//update stats
         if (!sg.getServer().getPlayer(player.getName()).isOnline()) {

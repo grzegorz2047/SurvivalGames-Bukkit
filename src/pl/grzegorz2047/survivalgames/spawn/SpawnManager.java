@@ -77,6 +77,8 @@ public class SpawnManager {
         if (sp != null) {
             user.getPlayer().teleport(sp.getLocation());
             sp.setFree(false, user.getUsername());
+        }else{
+            user.getPlayer().teleport(this.getSpectatorLoc());
         }
     }
 

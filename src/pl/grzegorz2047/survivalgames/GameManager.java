@@ -2,6 +2,7 @@ package pl.grzegorz2047.survivalgames;
 
 import dram.CoinsMod.CoinsMod;
 import dram.rankmod.main.RankMain;
+import dram.rankmod.main.RankMain.xpKeys;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -270,7 +271,7 @@ public class GameManager {
         } else if (activePlayers == 1) {
             Player winner = sg.getGameManager().getStats().getLastActivePlayer();
             if (winner != null) {
-                RankMain.addPlayerXp(winner.getName(),this.getExpForWin());
+                RankMain.addPlayerXp(winner, xpKeys.gameWin);
                 CoinsMod.ChangePlayerMoneyWOMultiplier(winner,this.getMoneyForWin(),true);
                 winner.sendMessage(MsgManager.msg("Wygrales mecz na survival games!"));
             }
